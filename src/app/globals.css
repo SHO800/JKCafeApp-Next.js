@@ -1,27 +1,46 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+/* html */
+html {
+  font-size: 90%;
+  scroll-behavior: smooth;
+  animation-name: fadeInAnime;
+  animation-fill-mode:backwards;
+  animation-duration:1s;
+  animation-timing-function:ease;
+  animation-delay: 0.1s;
+  animation-direction:normal;
+  /* animation-iteration-count: 1; */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
+/* body */
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-family: "Public Sans", NotoSans-medium, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", Arial, メイリオ, Meiryo, sans-serif;
+  background-color: #d2f0fab6;
+  color: #494949;
+}
+
+/* body-other */
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+p {
+  font-size: 1.3rem;
+}
+
+img {
+  max-width: 100%;
+}
+
+li {
+  list-style: none;
+  font-size: 1.2rem;
+
+}
+/* master-wrapper */
+.master-wrapper {
+  max-width: 1860px;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 0 4%;
 }
