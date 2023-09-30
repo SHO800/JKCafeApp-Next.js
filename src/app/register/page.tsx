@@ -3,17 +3,28 @@ import {useEffect, useState} from "react";
 import Registers from './register.module.css'
 
 import Script from 'next/script'
+import {id} from "postcss-selector-parser";
 
 const Register = () => {
-    type Menu = {
-        "id": number
-        "menu_name": string
-        "value": number
-        "short_name": string
-        "text": string
+    type Menus = {
+        [id: number]: {
+            "menu_name": string
+            "short_name": string
+            "text": string
+            "value": number
+            "discount": number
+        }
+    }
+    type OrderedMenu = {
+        [id: number]: {
+            "quantity": number,
+            "value": number,
+            "discount": number | null,
+            "sum": number,
+        }
     }
 
-    const [menus, setMenus] = useState<Menu[] | null>(null);
+    const [menus, setMenus] = useState<Menus | null>(null);
 
     // 初回ロード時のみ実行される
     useEffect(()=>{
@@ -28,8 +39,7 @@ const Register = () => {
             const res = await fetch(apiUrl)
                 .then(res => res.text())
                 .then(menu => {
-                    setMenus(JSON.parse(menu))
-                    // alert(menu)
+                    setMenus(JSON.parse(menu)
                 })
         }catch(err){
             alert(err)
@@ -52,14 +62,14 @@ const Register = () => {
                              <th style={{textAlign: "center"}}>確定</th>
                          </tr>
 
-                         {menus?.map((menu) => {
+                         {menus && Object.entries(menus).map(([id, data]) => {
                             return(
                                 <>
-                                <tr key={menu.id}>
+                                <tr key={id}>
                                     <form action={apiUrl} method="POST"></form>
-                                        <td style={{textAlign: "center"}}><input type="text" name="id" value={`No. ${ menu.id }`} style={{width: 50, color: "#6e6e6e"}}></input></td>
-                                        <td>{ menu.menu_name }</td>
-                                        <td style={{textAlign: "center"}}>{ menu.value }</td>
+                                        <td style={{textAlign: "center"}}><input type="text" name="id" value={`No. ${ id }`} style={{width: 50, color: "#6e6e6e"}}></input></td>
+                                        <td>{ data.menu_name }</td>
+                                        <td style={{textAlign: "center"}}>{ data.value }</td>
                                         <td style={{textAlign: "center"}}>
                                             <select name="quantity" className={Registers.input_border}>
                                                 <option value="1">１</option>
@@ -69,7 +79,7 @@ const Register = () => {
                                             </select>
                                         </td>
                                     {/* onclickの先の処理を書く */}
-                                        <td style={{textAlign: "center"}}><button type="button" onClick={(event) => alert("a")} className={Registers.input_border}>+</button></td>
+                                        <td style={{textAlign: "center"}}><button value={id} type="button" onClick={(event) => alert(menus[parseInt(event.currentTarget.value)])} className={Registers.input_border}>+</button></td>
                                 </tr>
                                 </>
                             )
