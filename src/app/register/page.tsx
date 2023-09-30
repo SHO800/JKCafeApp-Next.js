@@ -1,15 +1,16 @@
 "use client"
 import {useEffect, useState} from "react";
 import Registers from './register.module.css'
+
 import Script from 'next/script'
 
 const Register = () => {
     type Menu = {
-        id: number
-        menu_name: string
-        value: number
-        short_name: string
-        text: string
+        "id": number
+        "menu_name": string
+        "value": number
+        "short_name": string
+        "text": string
     }
 
     const [menus, setMenus] = useState<Menu[] | null>(null);
@@ -26,13 +27,13 @@ const Register = () => {
         try {
             const res = await fetch(apiUrl)
                 .then(res => res.text())
-                // .then(menu => {
-                //     setMenus(JSON.parse(menu))
-                // })
-            alert(res)
+                .then(menu => {
+                    setMenus(JSON.parse(menu))
+                    // alert(menu)
+                })
         }catch(err){
             alert(err)
-            console.log(err)
+            // console.log(err)
         }
     }
 
@@ -51,25 +52,29 @@ const Register = () => {
                              <th style={{textAlign: "center"}}>確定</th>
                          </tr>
 
-                         {/*{% for menue in menues %}*/}
-                         {/*<tr>*/}
-                             {/*<form action="{{ url_for('add_menue') }}" method="POST">*/}
-                             {/*    <td style={{textAlign: "center"}}><input type="text" name="id" value="No . {{ menue.id }}" style={{width: "50px", color: "#6e6e6e"}}></input></td>*/}
-                             {/*    /!*<td>{{ menue.menue_name }}</td>*!/*/}
-                             {/*    /!*<td style={{textAlign: "center"}}>{{ menue.value }}</td>*!/*/}
-                             {/*    <td style={{textAlign: "center"}}>*/}
-                             {/*        <select name="quantity" className={Registers.input_border}>*/}
-                             {/*            <option value="1">１</option>*/}
-                             {/*            <option value="2">２</option>*/}
-                             {/*            <option value="3">３</option>*/}
-                             {/*            <option value="4">４</option>*/}
-                             {/*        </select>*/}
-                             {/*    </td>*/}
-                                 {/*// <!-- <td>1596　円</td> -->*/}
-                                 {/*<td style={{textAlign: "center"}}><input type="submit" value="確定" className={Registers.input_border}></input></td>*/}
-                             {/*</form>*/}
-                         {/*</tr>*/}
-                         {/*{% endfor %}*/}
+                         {menus?.map((menu) => {
+                            return(
+                                <>
+                                <tr key={menu.id}>
+                                    <form action={apiUrl} method="POST"></form>
+                                        <td style={{textAlign: "center"}}><input type="text" name="id" value={`No. ${ menu.id }`} style={{width: 50, color: "#6e6e6e"}}></input></td>
+                                        <td>{ menu.menu_name }</td>
+                                        <td style={{textAlign: "center"}}>{ menu.value }</td>
+                                        <td style={{textAlign: "center"}}>
+                                            <select name="quantity" className={Registers.input_border}>
+                                                <option value="1">１</option>
+                                                <option value="2">２</option>
+                                                <option value="3">３</option>
+                                                <option value="4">４</option>
+                                            </select>
+                                        </td>
+                                    {/* onclickの先の処理を書く */}
+                                        <td style={{textAlign: "center"}}><button type="button" onClick={(event) => alert("a")} className={Registers.input_border}>+</button></td>
+                                </tr>
+                                </>
+                            )
+                         })}
+
                          </tbody>
                      </table>
                  </div>
@@ -111,7 +116,7 @@ const Register = () => {
                              </div>
                              <div style={{borderBottom: "solid 5px #bdbdbd"}}></div>
                              <form action="{{ url_for('checkout_submit') }}" method="POST">
-                                 <input type="submit" name="" id="checkout-submit" value="支払い完了"></input>
+                                 <button type="submit" name="" id="checkout-submit" value="支払い完了"></button>
                              </form>
                          </div>
                      </div>
