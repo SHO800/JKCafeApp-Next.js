@@ -1,96 +1,21 @@
-"use client"
-import {useEffect, useState} from "react";
 import Registers from './register.module.css'
+import { MenuType } from "@/app/register/ItemTypes";
+import { MenuList } from "@/app/register/MenuList";
 
-import Script from 'next/script'
-import {id} from "postcss-selector-parser";
 
-const Register = () => {
-    type Menus = {
-        [id: number]: {
-            "menu_name": string
-            "short_name": string
-            "text": string
-            "value": number
-            "discount": number
-        }
-    }
-    type OrderedMenu = {
-        [id: number]: {
-            "quantity": number,
-            "value": number,
-            "discount": number | null,
-            "sum": number,
-        }
-    }
+const apiUrl = "http://127.0.0.1:5000/menus";
 
-    const [menus, setMenus] = useState<Menus | null>(null);
-
-    // 初回ロード時のみ実行される
-    useEffect(()=>{
-        getMenu()
-    }, [])
-
-    const apiUrl = "http://localhost:5000/menus";
-
-    // APIからメニューを引っ張ってくる
-    async function getMenu(){
-        try {
-            const res = await fetch(apiUrl)
-                .then(res => res.text())
-                .then(menu => {
-                    setMenus(JSON.parse(menu)
-                })
-        }catch(err){
-            alert(err)
-            // console.log(err)
-        }
-    }
+const Register = async() => {
+    const menus = await getMenus(apiUrl)
 
     return (
         <>
-             {/* 左側のメニュー一覧 */}
-             <div className={Registers.container}>
-                 <div className={`${Registers.grid_box} ${Registers.scroll}`}>
-                     <table>
-                         <tbody>
-                         <tr>
-                             <th>商品番号</th>
-                             <th style={{textAlign: "left"}}>商品名</th>
-                             <th>単価</th>
-                             <th>個数</th>
-                             <th style={{textAlign: "center"}}>確定</th>
-                         </tr>
-
-                         {menus && Object.entries(menus).map(([id, data]) => {
-                            return(
-                                <>
-                                <tr key={id}>
-                                    <form action={apiUrl} method="POST"></form>
-                                        <td style={{textAlign: "center"}}><input type="text" name="id" value={`No. ${ id }`} style={{width: 50, color: "#6e6e6e"}}></input></td>
-                                        <td>{ data.menu_name }</td>
-                                        <td style={{textAlign: "center"}}>{ data.value }</td>
-                                        <td style={{textAlign: "center"}}>
-                                            <select name="quantity" className={Registers.input_border}>
-                                                <option value="1">１</option>
-                                                <option value="2">２</option>
-                                                <option value="3">３</option>
-                                                <option value="4">４</option>
-                                            </select>
-                                        </td>
-                                    {/* onclickの先の処理を書く */}
-                                        <td style={{textAlign: "center"}}><button value={id} type="button" onClick={(event) => alert(menus[parseInt(event.currentTarget.value)])} className={Registers.input_border}>+</button></td>
-                                </tr>
-                                </>
-                            )
-                         })}
-
-                         </tbody>
-                     </table>
-                 </div>
+            <div className={Registers.container}>
+                {/* 左側のメニュー一覧 */}
+                <MenuList menus={menus} />
 
                  {/*{#        右側のリスト#}*/}
-                     <div className={`${Registers.grid_box} ${Registers.scroll} ${Registers.y_grid}`}>
+                 <div className={`${Registers.grid_box} ${Registers.scroll} ${Registers.y_grid}`}>
                      <div className={`${Registers.grid_top} ${Registers.scroll}`}>
                          <table className={Registers.checkout_menue} id="session-menues">
                              <tbody>
@@ -140,5 +65,17 @@ const Register = () => {
         </>
     )
 }
+
+async function getMenus(url: string){
+    // APIからメニューを引っ張ってくる
+    try {
+        return await fetch(url)
+            .then(res => res.json())
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+
 
 export default Register
