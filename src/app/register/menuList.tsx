@@ -1,7 +1,8 @@
 "use client"
-
 import Registers from "@/app/register/register.module.css";
-import { MenuType } from "@/app/register/ItemTypes";
+import {MenuType, OrderedMenu} from "@/app/register/itemTypes";
+import {useCallback, useContext, MouseEvent} from "react";
+import {OrdersContext} from "@/app/register/ordersContext";
 
 export function MenuList({menus}: {menus:MenuType}) {
     return (
@@ -30,7 +31,7 @@ function Menus({menus}: {menus:MenuType}){
     const menuItems = Object.entries(menus)
     return menuItems.map( ( [id, data] ) => {
             return (
-                <MenuListButton key={id} id={parseInt(id)} menu_name={data.short_name} value={data.value} />
+                <MenuListButton key={id} id={parseInt(id)} menu_name={data.menu_name} value={data.value} />
             )
         })
 }
@@ -41,6 +42,31 @@ function MenuListButton({id, menu_name, value}: {
         menu_name: string,
         value: number
     }){
+
+    const setOrders = useContext(OrdersContext);
+    // function handleClick(e){
+    //     setOrders(prevState => [...prevState] + e.value)
+    // }
+
+    const handleClick = useCallback( (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>)=>{
+        if (setOrders == null) return;
+        const id = parseInt(e.currentTarget.value);
+        const addData:OrderedMenu = {
+            [id]:{
+                quantity:,
+                value:,
+                sum:,
+                discount:,
+            }
+        }
+
+        setOrders(prevState => {
+            return prevState ? e.currentTarget.value + [...prevState] : [e.currentTarget.value];
+        })
+        alert(e.currentTarget.value)
+    }, [])
+
+
     return(
         <>
             <tr>
@@ -56,7 +82,7 @@ function MenuListButton({id, menu_name, value}: {
                     </select>
                 </td>
                 {/* onclickの先の処理を書く */}
-                {/*<td style={{textAlign: "center"}}><button value={props.id} type="button" onClick={(event) => alert(menus[parseInt(event.currentTarget.value)])} className={Registers.input_border}>+</button></td>*/}
+                <td style={{textAlign: "center"}}><button value={id} onClick={(event) => handleClick(event)} type="button" className={Registers.input_border}>+</button></td>
             </tr>
         </>
     )
