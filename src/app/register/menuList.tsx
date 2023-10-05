@@ -1,26 +1,25 @@
 "use client"
 import Registers from "@/app/register/register.module.css";
 import {MenuType, OrderedMenu} from "@/app/register/itemTypes";
-import {useCallback, useContext, MouseEvent} from "react";
+import {useCallback, useContext, MouseEvent, FormEventHandler, FormEvent} from "react";
 import {OrdersContext} from "@/app/register/ordersContext";
 
 export function MenuList({menus}: {menus:MenuType}) {
     return (
-        <div className={`${Registers.grid_box} ${Registers.scroll}`}>
-            <table>
-                <tbody>
-                <tr>
-                    <th>商品番号</th>
-                    <th style={{textAlign: "left"}}>商品名</th>
-                    <th>単価</th>
-                    <th>個数</th>
-                    <th style={{textAlign: "center"}}>確定</th>
-                </tr>
+        <div className={`${Registers.grid_box} ${Registers.table}`}>
+            <div className={Registers.spacer}>
+                <div className={Registers.index}>
+                    <div style={{flexGrow:1}}>商品番号</div>
+                    <div style={{flexGrow:1}}>商品名</div>
+                    <div style={{flexGrow:1}}>単価</div>
+                    <div style={{flexGrow:1}}>個数</div>
+                    <div style={{flexGrow:1}}>確定</div>
+                </div>
+                <div className={`${Registers.menuList} ${Registers.scroll}`}>
+                    <Menus menus={menus}/>
 
-                <Menus menus={menus}/>
-
-                </tbody>
-            </table>
+                </div>
+            </div>
         </div>
     )
 }
@@ -31,7 +30,7 @@ function Menus({menus}: {menus:MenuType}){
     const menuItems = Object.entries(menus)
     return menuItems.map( ( [id, data] ) => {
             return (
-                <MenuListButton key={id} id={parseInt(id)} menu_name={data.menu_name} value={data.value} />
+                <MenuListButton key={id} id={parseInt(id)} menu_name={data.menu_name} value={data.value}/>
             )
         })
 }
@@ -48,42 +47,47 @@ function MenuListButton({id, menu_name, value}: {
     //     setOrders(prevState => [...prevState] + e.value)
     // }
 
-    const handleClick = useCallback( (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>)=>{
+    const handleSubmit = useCallback( (e: FormEvent<HTMLFormElement>)=>{
         if (setOrders == null) return;
-        const id = parseInt(e.currentTarget.value);
-        const addData:OrderedMenu = {
-            [id]:{
-                quantity:,
-                value:,
-                sum:,
-                discount:,
-            }
-        }
+        // const id = parseInt(e.);
+        // const addData:OrderedMenu = {
+        //     [id]:{
+        //         quantity: ,
+        //         value:,
+        //         sum:,
+        //         discount:,
+        //     }
+        // }
 
-        setOrders(prevState => {
-            return prevState ? e.currentTarget.value + [...prevState] : [e.currentTarget.value];
-        })
+        // setOrders(prevState => {
+        //     return prevState ? e.currentTarget.value + [...prevState] : [e.currentTarget.value];
+        // })
         alert(e.currentTarget.value)
     }, [])
 
 
     return(
-        <>
-            <tr>
-                <td style={{textAlign: "center"}}><input type="text" name="id" defaultValue={`No. ${ id }`} style={{width: 50, color: "#6e6e6e"}}></input></td>
-                <td>{ menu_name }</td>
-                <td style={{textAlign: "center"}}>{ value }</td>
-                <td style={{textAlign: "center"}}>
-                    <select name="quantity" className={Registers.input_border}>
-                        <option value="1">１</option>
-                        <option value="2">２</option>
-                        <option value="3">３</option>
-                        <option value="4">４</option>
-                    </select>
-                </td>
-                {/* onclickの先の処理を書く */}
-                <td style={{textAlign: "center"}}><button value={id} onClick={(event) => handleClick(event)} type="button" className={Registers.input_border}>+</button></td>
-            </tr>
-        </>
+        <div className={Registers.item}>
+            <form onSubmit={(event)=>handleSubmit(event)}>
+                    <div style={{textAlign: "center"}}>
+                        <input name="id" defaultValue={`No. ${ id }`} type="text"  style={{width: 50, color: "#6e6e6e"}} readOnly></input>
+                    </div>
+                    <div>
+                        <input name="" defaultValue={ menu_name } type="text" readOnly></input>
+                    </div>
+                    <div style={{textAlign: "center"}}>
+                        <input name="" defaultValue={ value } type="number" readOnly></input>
+                    </div>
+                    <div style={{textAlign: "center"}}>
+                        <select name="quantity" className={Registers.input_border}>
+                            <option value="1">１</option>
+                            <option value="2">２</option>
+                            <option value="3">３</option>
+                            <option value="4">４</option>
+                        </select>
+                    </div>
+                    <div style={{textAlign: "center"}}><button value={id}  type="submit" className={Registers.input_border}>+</button></div>
+            </form>
+        </div>
     )
 }

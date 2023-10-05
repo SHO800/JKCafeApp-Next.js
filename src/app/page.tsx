@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Test from './components/test'
 import Homes from './home.module.css'
+import BigTitle from "@/app/components/bigTItle/bigTitle";
 
 export default function Home() {
   const MENUS = [1, 2, 3, 4]
@@ -8,6 +9,7 @@ export default function Home() {
 
   return (
       <>
+        <BigTitle />
         <div className={Homes.container}>
           {MENUS.map((menu)=>{
             const position = menu % 2 == 0 ? Homes.menu_left : Homes.menu_right;
