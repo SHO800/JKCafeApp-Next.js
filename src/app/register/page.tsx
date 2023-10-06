@@ -12,7 +12,7 @@ export default function Register() {
     const [currentOrders, setCurrentOrders] = useState<OrderedMenu[] | null>(null)
 
     useEffect(() => {
-        alert(currentOrders)
+        // alert(currentOrders)
     }, [currentOrders]);
 
     return (

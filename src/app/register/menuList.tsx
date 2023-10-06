@@ -9,11 +9,11 @@ export function MenuList({menus}: {menus:MenuType}) {
         <div className={`${Registers.grid_box} ${Registers.table}`}>
             <div className={Registers.spacer}>
                 <div className={Registers.index}>
-                    <div style={{flexGrow:1}}>商品番号</div>
-                    <div style={{flexGrow:1}}>商品名</div>
-                    <div style={{flexGrow:1}}>単価</div>
-                    <div style={{flexGrow:1}}>個数</div>
-                    <div style={{flexGrow:1}}>確定</div>
+                    <div style={{width:"10%"}}>商品番号</div>
+                    <div style={{width:"60%"}}>商品名</div>
+                    <div style={{width:"10%"}}>単価</div>
+                    <div style={{width:"10%"}}>個数</div>
+                    <div style={{width:"10%"}}>確定</div>
                 </div>
                 <div className={`${Registers.menuList} ${Registers.scroll}`}>
                     <Menus menus={menus}/>
@@ -49,10 +49,11 @@ function MenuListButton({id, menu_name, value}: {
 
     const handleSubmit = useCallback( (e: FormEvent<HTMLFormElement>)=>{
         if (setOrders == null) return;
+        e.preventDefault()
         // const id = parseInt(e.);
         // const addData:OrderedMenu = {
         //     [id]:{
-        //         quantity: ,
+        //         quantity: e.currentTarget.elements.,
         //         value:,
         //         sum:,
         //         discount:,
@@ -62,23 +63,25 @@ function MenuListButton({id, menu_name, value}: {
         // setOrders(prevState => {
         //     return prevState ? e.currentTarget.value + [...prevState] : [e.currentTarget.value];
         // })
-        alert(e.currentTarget.value)
+        alert(e.currentTarget.elements["value"].value)
     }, [])
 
 
     return(
         <div className={Registers.item}>
             <form onSubmit={(event)=>handleSubmit(event)}>
-                    <div style={{textAlign: "center"}}>
-                        <input name="id" defaultValue={`No. ${ id }`} type="text"  style={{width: 50, color: "#6e6e6e"}} readOnly></input>
+                    <div style={{width:"10%"}}>
+                        <span style={{margin:"auto"}}>No.
+                        <input name="id" defaultValue={id} type="number" readOnly></input></span>
                     </div>
-                    <div>
-                        <input name="" defaultValue={ menu_name } type="text" readOnly></input>
+                    <div style={{width:"60%"}}>
+                        <button name="name" value={menu_name} disabled>{ menu_name }</button>
+                        {/*valueが表示内容になるinput要素を使いたかったが改行ができないのでこれだけbutton*/}
                     </div>
-                    <div style={{textAlign: "center"}}>
-                        <input name="" defaultValue={ value } type="number" readOnly></input>
+                    <div style={{width:"10%"}}>
+                        <input name="value" value={ value } type="number" readOnly></input>
                     </div>
-                    <div style={{textAlign: "center"}}>
+                    <div style={{width:"10%"}}>
                         <select name="quantity" className={Registers.input_border}>
                             <option value="1">１</option>
                             <option value="2">２</option>
@@ -86,7 +89,7 @@ function MenuListButton({id, menu_name, value}: {
                             <option value="4">４</option>
                         </select>
                     </div>
-                    <div style={{textAlign: "center"}}><button value={id}  type="submit" className={Registers.input_border}>+</button></div>
+                    <div style={{width:"10%"}}><button value={id}  type="submit" className={Registers.input_border}>+</button></div>
             </form>
         </div>
     )
