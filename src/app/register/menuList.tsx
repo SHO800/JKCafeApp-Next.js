@@ -1,8 +1,8 @@
 "use client"
 import Registers from "@/app/register/register.module.css";
 import {MenuType, OrderedMenu} from "@/app/register/itemTypes";
-import {useCallback, useContext, MouseEvent, FormEventHandler, FormEvent} from "react";
-import {OrdersContext} from "@/app/register/ordersContext";
+import {useCallback, useContext, FormEvent} from "react";
+import {OrdersContext, SetOrdersContext} from "@/app/register/ordersContext";
 
 export function MenuList({menus}: {menus:MenuType}) {
     return (
@@ -42,29 +42,40 @@ function MenuListButton({id, menu_name, value}: {
         value: number
     }){
 
-    const setOrders = useContext(OrdersContext);
+    const setOrders = useContext(SetOrdersContext);
     // function handleClick(e){
     //     setOrders(prevState => [...prevState] + e.value)
     // }
 
     const handleSubmit = useCallback( (e: FormEvent<HTMLFormElement>)=>{
-        if (setOrders == null) return;
-        e.preventDefault()
-        // const id = parseInt(e.);
-        // const addData:OrderedMenu = {
-        //     [id]:{
-        //         quantity: e.currentTarget.elements.,
-        //         value:,
-        //         sum:,
-        //         discount:,
-        //     }
-        // }
+        alert((e.currentTarget.elements.namedItem("id") as HTMLInputElement).value)
 
-        // setOrders(prevState => {
-        //     return prevState ? e.currentTarget.value + [...prevState] : [e.currentTarget.value];
-        // })
-        alert(e.currentTarget.elements["value"].value)
-    }, [])
+        if (!setOrders && !e) return;
+        e.preventDefault()
+
+        const elements = e.currentTarget.elements;
+
+        const id = parseInt((elements.namedItem("id") as HTMLInputElement).value);
+        const quantity = parseInt((elements.namedItem("quantity") as HTMLInputElement).value)
+        const value = parseInt((elements.namedItem("value") as HTMLInputElement).value)
+        const sum = (value * quantity)
+
+        const addData:OrderedMenu = {
+            [id]:{
+                quantity: quantity,
+                value: value,
+                sum: sum,
+                discount: null
+            }
+        }
+
+        setOrders(prevState => {
+            // alert(prevState)
+            return prevState ? [...prevState, addData] : [addData];
+        })
+
+        alert((e.currentTarget.elements.namedItem("value") as HTMLInputElement).value)
+    }, [setOrders])
 
 
     return(

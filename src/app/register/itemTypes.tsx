@@ -10,7 +10,7 @@ export type MenuType = {
 
 export type OrderedMenu = {
     [id: number]: {
-    "quantity": number,
+        "quantity": number,
         "value": number,
         "discount": number | null,
         "sum": number,

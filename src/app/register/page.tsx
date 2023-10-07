@@ -1,25 +1,14 @@
-"use client"
-import {MenuType, OrderedMenu} from "@/app/register/itemTypes";
-import {createContext, useContext, useEffect, useState} from "react";
 import {ContentWrapper} from "@/app/register/contentWrapper";
-import {OrdersContext} from "@/app/register/ordersContext";
+import {MenuType} from "@/app/register/itemTypes";
 
 
 const apiUrl:string = "http://127.0.0.1:5000/menus";
 
-export default function Register() {
-
-    const [currentOrders, setCurrentOrders] = useState<OrderedMenu[] | null>(null)
-
-    useEffect(() => {
-        // alert(currentOrders)
-    }, [currentOrders]);
-
+export default async function Register() {
+    const menus: MenuType = await getMenus(apiUrl)
     return (
         <>
-            <OrdersContext.Provider value={setCurrentOrders}>
-                <ContentWrapper url={apiUrl}/>
-            </OrdersContext.Provider>
+            <ContentWrapper menus={menus}/>
 
             {/*<Script*/}
             {/*    strategy="lazyOnload"*/}
@@ -27,4 +16,15 @@ export default function Register() {
             {/*/>*/}
         </>
     )
+}
+
+async function getMenus(url: string){
+    // APIからメニューを引っ張ってくる
+    try {
+        return await fetch(url, {cache: "no-cache"})
+            .then(res => res.json())
+    }
+    catch(err){
+        console.log(err)
+    }
 }

@@ -1,29 +1,31 @@
-
+'use client'
 
 import Registers from "@/app/register/register.module.css";
 import {MenuList} from "@/app/register/menuList";
 import OrderList from "@/app/register/orderList";
-import {Dispatch, SetStateAction} from "react";
-import {OrderedMenu} from "@/app/register/itemTypes";
+import {MenuType, OrderedMenu} from "@/app/register/itemTypes";
+import {useEffect, useState} from "react";
+import {OrdersContext, SetOrdersContext} from "@/app/register/ordersContext";
 
-export async function ContentWrapper({url}:{url:string}){
-    const menus = await getMenus(url)
+
+export function ContentWrapper({menus}:{menus:MenuType}){
+
+    const [currentOrders, setCurrentOrders] = useState<OrderedMenu[]>([])
+    useEffect(()=>{
+        console.log(currentOrders[0] && Object.values(currentOrders[0])[0])
+    }, [currentOrders])
+
 
     return(
         <div className={Registers.container}>
-            <MenuList menus={menus} />
-            <OrderList />
+            <OrdersContext.Provider value={currentOrders}>
+                <SetOrdersContext.Provider value={setCurrentOrders}>
+                    <MenuList menus={menus}/>
+                    <OrderList />
+                </SetOrdersContext.Provider>
+            </OrdersContext.Provider>
         </div>
     )
 }
 
-async function getMenus(url: string){
-    // APIからメニューを引っ張ってくる
-    try {
-        return await fetch(url)
-            .then(res => res.json())
-    }
-    catch(err){
-        console.log(err)
-    }
-}
+
