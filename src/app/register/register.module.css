@@ -65,7 +65,8 @@
     -webkit-appearance: none;
     margin: 0;
 }
-.item form div button{
+.item form div button[disabled]{ /*すなわち何かの表示用のボタン*/
+    width: 100%;
     color: black;
     text-align: left;
 }
