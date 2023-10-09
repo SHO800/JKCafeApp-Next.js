@@ -1,11 +1,11 @@
 import {ContentWrapper} from "@/app/register/contentWrapper";
-import {MenuType} from "@/app/register/itemTypes";
+import {MenuData} from "@/app/register/itemTypes";
 
 
 const apiUrl:string = "http://127.0.0.1:5000/menus";
 
 export default async function Register() {
-    const menus: MenuType = await getMenus(apiUrl)
+    const menus: MenuData = await getMenus(apiUrl)
     return (
         <>
             <ContentWrapper menus={menus}/>

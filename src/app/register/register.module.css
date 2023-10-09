@@ -22,17 +22,14 @@
 .index div {
     text-align: center;
 }
-
+/* 左側のリスト */
 .item{
     border-bottom: solid 20px #e3f6fc;
     padding: 10px 20px;
-
 }
 .item form{
-    /*justify-content: space-between;*/
     height: auto;
     display: flex;
-    flex-direction: row;
 }
 .item form span{
     display: flex;
@@ -69,6 +66,22 @@
     width: 100%;
     color: black;
     text-align: left;
+}
+
+/* 右側の注文リスト */
+.list {
+    display: flex;
+    flex-direction: column;
+
+}
+.list .upper {
+    /*height: 200px;*/
+}
+.list .lower {
+
+}
+.list .lower .toppings {
+
 }
 
 

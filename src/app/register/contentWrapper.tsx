@@ -2,25 +2,31 @@
 import Registers from "@/app/register/register.module.css";
 import {MenuList} from "@/app/register/menuList";
 import OrderList from "@/app/register/orderList";
-import {MenuType, OrderedMenu} from "@/app/register/itemTypes";
-import {useEffect, useState} from "react";
-import {OrdersContext, SetOrdersContext} from "@/app/register/ordersContext";
+import {MenuData, OrderData, OrderDetail, ToppingData} from "@/app/register/itemTypes";
+import {useEffect} from "react";
+import {OrdersContext, HandleAddOrderContext} from "@/app/register/ordersContext";
+import useOrderDetails from "@/app/register/hooks/useOrderDetails";
 
-export function ContentWrapper({menus}:{menus:MenuType}){
-    const [currentOrders, setCurrentOrders] = useState<OrderedMenu[]>([])
+export function ContentWrapper({menus}:{menus:MenuData}){
+
+
+    const {currentOrders, handleAddOrder} = useOrderDetails(menus);
+
     useEffect(()=>{
         // console.log(currentOrders[0] && Object.values(currentOrders[0])[0])
-        // console.log(currentOrders)
+        console.log(currentOrders)
     }, [currentOrders])
+
+
 
 
     return(
         <div className={Registers.container}>
             <OrdersContext.Provider value={currentOrders}>
-                <SetOrdersContext.Provider value={setCurrentOrders}>
+                <HandleAddOrderContext.Provider value={handleAddOrder}>
                     <MenuList menus={menus}/>
-                    <OrderList menus={menus} orders={currentOrders}/>
-                </SetOrdersContext.Provider>
+                    <OrderList currentOrders={currentOrders}/>
+                </HandleAddOrderContext.Provider>
             </OrdersContext.Provider>
         </div>
     )
