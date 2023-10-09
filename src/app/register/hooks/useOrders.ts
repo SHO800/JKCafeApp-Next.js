@@ -1,72 +1,67 @@
 import {FormEvent, useCallback, useState} from "react";
 import {MenuData, OrderData, OrderDetail, ToppingData} from "@/app/register/itemTypes";
+import {type} from "os";
 
-
-const useOrderDetails = (menus: MenuData) => {
+export const useOrders = (menus: MenuData) : OrdersHooksType => {
     // 必要なもの 注文の追加 追加されたものの数を変更
     const [currentOrders, setCurrentOrders] = useState<OrderDetail[]>([])
-
     const handleAddOrder = useCallback( (e: FormEvent<HTMLFormElement>)=> {
         e.preventDefault()
         const elements = e.currentTarget.elements;
         const id = parseInt((elements.namedItem("id") as HTMLInputElement).value);
         // const value = parseInt((elements.namedItem("value") as HTMLInputElement).value)
         setCurrentOrders(prevState => {
-            const prevItemIndex = prevState.findIndex(item => item.id == id);
-            if (prevItemIndex > -1){ // すでに同じ商品が追加されていたなら
-                // ディープコピーする
-                const newData: OrderDetail[] = prevState.map(item => {
-                    return JSON.parse(JSON.stringify(item));
-                });
-
-                const modifyData: OrderData = newData[prevItemIndex];
-                modifyData.quantity += 1;
-                newData[prevItemIndex] = convertToOrderDetail(menus, modifyData);
-
-                return newData;
-            }else{
-                const defaultData: OrderData = {
-                    id: id,
-                    quantity: 1,
-                    topping: null
-                }
-                const addData: OrderDetail = convertToOrderDetail(menus, defaultData);
-                return [...prevState, addData];
+            const defaultData: OrderData = {
+                id: id,
+                quantity: 1,
+                topping: null
             }
+            const addData: OrderDetail = convertToOrderDetail(menus, defaultData);
+            return [...prevState, addData];
         })
 
-
-
-
-        // setCurrentOrders(prevState => {
-        //     const prevItemIndex = prevState.findIndex(item => item.id == id);
-        //     if (prevItemIndex > -1){
-        //         // ディープコピーする
-        //         const newState = prevState.map(item => {
-        //             return JSON.parse(JSON.stringify(item));
-        //         });
+        // const prevItemIndex = prevState.findIndex(item => item.id == id);
+        // if (prevItemIndex > -1){ // すでに同じ商品が追加されていたなら
+        //     // ディープコピーする
+        //     const newData: OrderDetail[] = prevState.map(item => {
+        //         return JSON.parse(JSON.stringify(item));
+        //     });
         //
-        //         // newState[prevItemIndex].discount = discount
-        //         newState[prevItemIndex].quantity += quantity;
-        //         newState[prevItemIndex].sum = newState[prevItemIndex].quantity * value;
+        //     const modifyData: OrderData = newData[prevItemIndex];
+        //     modifyData.quantity += 1;
+        //     newData[prevItemIndex] = convertToOrderDetail(menus, modifyData);
         //
-        //         if (newState[prevItemIndex].discount) newState[prevItemIndex].sum -= newState[prevItemIndex].discount * 50;
-        //         return newState;
-        //     } else {
-        //         return prevState ? [...prevState, addData] : [addData];
+        //     return newData;
+        // }else{
+        //     const defaultData: OrderData = {
+        //         id: id,
+        //         quantity: 1,
+        //         topping: null
         //     }
-        // });
-    }, [setCurrentOrders])
+        //     const addData: OrderDetail = convertToOrderDetail(menus, defaultData);
+        //     return [...prevState, addData];
+        // }
+    }, [menus])
+    const handleChangeBaseQuantity = useCallback((e: InputEvent) => {
+        const button = e.currentTarget as HTMLButtonElement;
+        const index = button.value;
+        // ボタンにindexを設定したのでここから情報の変更を行う
+    }, [])
 
-    return {currentOrders, handleAddOrder}
+    return {
+        currentOrders,
+        handleAddOrder
+    }
 
     // return [currentOrderDetails, {
     //     addOrder,
     //
     // }]
 }
-
-export default useOrderDetails;
+export type OrdersHooksType = {
+    currentOrders: OrderDetail[],
+    handleAddOrder: (e: FormEvent<HTMLFormElement>) => void
+}
 
 function convertToOrderDetail(menuData: MenuData, orderData: OrderData): OrderDetail {
     const orderDetail: OrderDetail = {

@@ -1,22 +1,24 @@
 "use client"
-import Registers from "@/app/register/register.module.css";
+import Registers from "@/app/register/css/register.module.css";
+import OrderLists from "@/app/register/css/orderList.module.css"
 import {MenuData, OrderData, OrderDetail} from "@/app/register/itemTypes";
+import {OrdersHooksType} from "@/app/register/hooks/useOrders";
 
-export default function OrderList({currentOrders}: {currentOrders: OrderDetail[]}) {
+export default function OrderList({ordersHooks}: {ordersHooks: OrdersHooksType}) {
     return (
         <>
         <div className={`${Registers.grid_box} ${Registers.table}`}>
             <div className={Registers.spacer}>
                 <div className={Registers.index}>
-                    <div style={{width:"10%"}}>商品番号</div>
-                    <div style={{width:"60%"}}>商品名</div>
+                    {/*<div style={{width:"10%"}}>商品番号</div>*/}
+                    <div style={{width:"40%"}}>商品名</div>
                     <div style={{width:"10%"}}>単価</div>
-                    <div style={{width:"10%"}}>個数</div>
+                    <div style={{width:"40%"}}>個数</div>
                     <div style={{width:"10%"}}>小計</div>
-                    <div style={{width:"10%"}}>削除</div>
+                    {/*<div style={{width:"10%"}}>削除</div>*/}
                 </div>
                 <div className={`${Registers.menuList} ${Registers.scroll}`}>
-                    <Orders orders={currentOrders}/>
+                    <Orders ordersHooks={ordersHooks}/>
 
                 </div>
             </div>
@@ -38,66 +40,92 @@ export default function OrderList({currentOrders}: {currentOrders: OrderDetail[]
     )
 }
 
-function Orders({orders}: {orders: OrderDetail[]}){
-    if (!orders) return null;
+function Orders({ordersHooks}: {ordersHooks: OrdersHooksType}){
+    if (!ordersHooks.currentOrders) return null;
 
-    return orders.map( ( order ) => {
+    // 直近の注文を操作できるようにするため反転
+    const rvOrder = ordersHooks.currentOrders.toReversed()
+    return rvOrder.map( ( order, index ) => {
         return (
-            <OrderListButton key={order.id} order={order}/>
+            <OrderListButton key={order.id * 100 + index} order={order} ordersHooks={ordersHooks} index={index}/>
         )
     })
 }
 
-function OrderListButton({order}:{order: OrderDetail}) {
+function OrderListButton({order, ordersHooks, index}:{order: OrderDetail, ordersHooks: OrdersHooksType, index:number}) {
 
     return (
-        <div className={Registers.item}>
-            <form className={Registers.list}>
-                <div className={Registers.upper}>
-                    <div style={{width:"10%"}}>
-                        <span style={{margin:"auto"}}>No.
-                        <input name="id" defaultValue={ order.id } type="number" readOnly></input></span>
-                    </div>
-                    <div style={{width:"50%"}}>
+        <div className={OrderLists.item}>
+            <form className={OrderLists.list}>
+                <div className={OrderLists.base}>
+                    <div style={{width:"40%"}}>
                         <button name="name" value={ order.menu_name } disabled>{ order.menu_name }</button>
-                        {/*valueが表示内容になるinput要素を使いたかったが改行ができないのでこれだけbutton*/}
                     </div>
                     <div style={{width:"10%"}}>
                         <input name="value" value={ order.value } type="number" readOnly></input>
                     </div>
-                    <div style={{width:"10%"}}>
+                    <div style={{width: "2.5%"}}>
+
+                    </div>
+                    <div style={{width:"15%"}}>
+                        <button value={ index }  type="button" className={`${Registers.input_border} ${OrderLists.quantityButton} ${OrderLists.minus}`}>-</button>
+                    </div>
+                    <div style={{width:"5%"}}>
                         <input name="quantity" value={ order.quantity } type="number" readOnly></input>
+                    </div>
+                    <div style={{width:"15%"}}>
+                        <button value={ index }  type="button" className={`${Registers.input_border} ${OrderLists.quantityButton} ${OrderLists.plus}`}>+</button>
+                    </div>
+                    <div style={{width: "2.5%"}}>
+
                     </div>
                     <div style={{width:"10%"}}>
                         <input name="sum" value={ order.sum } type="number" readOnly></input>
                     </div>
-                    <div style={{width:"10%"}}><button value={ order.id }  type="submit" className={Registers.input_border}>-</button></div>
                 </div>
-                <div className={Registers.lower}>
-                    {order.topping && Object.entries(order.topping).map(item => {
-                        return(
-                            <div key={null} className={Registers.toppings}>
-                                <div style={{width:"10%"}}>
+                <div className={OrderLists.option}>
+                    {order.topping && Object.keys(order.topping).map((name, index) => {
+                        const topping = order.topping;
+                        if (!topping) return;
 
-                                </div>
-                                <div style={{width:"50%"}}>
-                                    <button name="name" value={ order.menu_name } disabled>{ order.menu_name }</button>
+                        const value = topping[name].value;
+                        const quantity = topping[name].quantity;
+                        const couponAmount = topping[name].couponAmount;
+
+                        return(
+                            <div key={order.id * 100 + index + name } className={OrderLists.toppings}>
+                                <div style={{width:"25%"}}>
+                                    <button name="name" value={ name } disabled>{ name }</button>
                                     {/*valueが表示内容になるinput要素を使いたかったが改行ができないのでこれだけbutton*/}
                                 </div>
-                                <div style={{width:"10%"}}>
-                                    <input name="value" value={ order.value } type="number" readOnly></input>
+                                <div style={{width:"5%"}}></div>
+                                <div style={{width:"5%"}}>
+                                    <input name="value" value={ value } type="number" readOnly></input>
                                 </div>
-                                <div style={{width:"10%"}}>
-                                    <input name="quantity" value={ order.quantity } type="number" readOnly></input>
+                                <div style={{width:"5%"}}>
+                                    <input name="quantity" value={ quantity } type="number" readOnly></input>
                                 </div>
-                                <div style={{width:"10%"}}>
-                                    <input name="sum" value={ order.sum } type="number" readOnly></input>
+                                <div style={{width:"60%"}}>
+
                                 </div>
-                                <div style={{width:"10%"}}><button value={ order.id }  type="submit" className={Registers.input_border}>-</button></div>
+                                {/*<div style={{width:"10%"}}><button value={ order.id }  type="submit" className={Registers.input_border}>-</button></div>*/}
                             </div>
                         )
                         })}
 
+                </div>
+
+                <div className={OrderLists.sum}>
+                    <div style={{width:"10%"}}>
+                        <button value={ index }  type="button" className={Registers.input_border}>削除</button>
+                    </div>
+                    <div style={{width:"65%"}}></div>
+                    <div style={{width:"15%"}}>
+                        <p>商品小計: </p>
+                    </div>
+                    <div style={{width:"10%"}}>
+                        <input name="sum" value={ order.sum } type="number" readOnly></input>
+                    </div>
                 </div>
             </form>
         </div>
