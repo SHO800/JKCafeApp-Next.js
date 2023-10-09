@@ -16,6 +16,7 @@ body {
   font-family: "Public Sans", NotoSans-medium, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", Arial, メイリオ, Meiryo, sans-serif;
   background-color: #d2f0fab6;
   color: #494949;
+  user-select: none;
 }
 
 /* body-other */

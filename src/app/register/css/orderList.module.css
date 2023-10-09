@@ -68,21 +68,21 @@
     text-align: left;
 }
 
-/* 右側の注文リスト */
-.list {
-    display: flex;
-    flex-direction: column;
+/*!* 右側の注文リスト *!*/
+/*.list {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
 
-}
-.list .upper {
-    /*height: 200px;*/
-}
-.list .lower {
+/*}*/
+/*.list .upper {*/
+/*    !*height: 200px;*!*/
+/*}*/
+/*.list .lower {*/
 
-}
-.list .lower .toppings {
+/*}*/
+/*.list .lower .toppings {*/
 
-}
+/*}*/
 
 
 .menuList{

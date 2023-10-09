@@ -1,5 +1,6 @@
 "use client"
-import Registers from "@/app/register/register.module.css";
+import Registers from "@/app/register/css/register.module.css";
+import MenuLists from "@/app/register/css/menuList.module.css"
 import {MenuData} from "@/app/register/itemTypes";
 import {useContext} from "react";
 import {HandleAddOrderContext} from "@/app/register/ordersContext";
@@ -9,11 +10,11 @@ export function MenuList({menus}: {menus:MenuData}) {
         <div className={`${Registers.grid_box} ${Registers.table}`}>
             <div className={Registers.spacer}>
                 <div className={Registers.index}>
-                    <div style={{width:"10%"}}>商品番号</div>
+                    <div style={{width:"15%"}}>商品番号</div>
                     <div style={{width:"70%"}}>商品名</div>
-                    <div style={{width:"10%"}}>単価</div>
+                    <div style={{width:"15%"}}>単価</div>
                     {/*<div style={{width:"10%"}}>個数</div>*/}
-                    <div style={{width:"10%"}}>追加</div>
+                    {/*<div style={{width:"10%"}}>追加</div>*/}
                 </div>
                 <div className={`${Registers.menuList} ${Registers.scroll}`}>
                     <Menus menus={menus}/>
@@ -46,9 +47,9 @@ function MenuListButton({id, menu_name, value}: {
 
 
     return(
-        <div className={Registers.item}>
+        <div className={MenuLists.item}>
             <form onSubmit={(event)=>handleAddOrder(event)}>
-                    <div style={{width:"10%"}}>
+                    <div style={{width:"15%"}}>
                         <span style={{margin:"auto"}}>No.
                         <input name="id" defaultValue={id} type="number" readOnly></input></span>
                     </div>
@@ -56,7 +57,7 @@ function MenuListButton({id, menu_name, value}: {
                         <button name="name" value={menu_name} disabled>{ menu_name }</button>
                         {/*value属性が表示内容になるinput要素を使いたかったが改行ができないのでこれだけbutton*/}
                     </div>
-                    <div style={{width:"10%"}}>
+                    <div style={{width:"15%"}}>
                         <input name="value" value={ value } type="number" readOnly></input>
                     </div>
                     {/*<div style={{width:"10%"}}>*/}
@@ -67,7 +68,8 @@ function MenuListButton({id, menu_name, value}: {
                     {/*        <option value="4">４</option>*/}
                     {/*    </select>*/}
                     {/*</div>*/}
-                    <div style={{width:"10%"}}><button type="submit" className={Registers.input_border}>+</button></div>
+                    {/*<div style={{width:"10%"}}></div>*/}
+                    <button type="submit" ></button>
             </form>
         </div>
     )

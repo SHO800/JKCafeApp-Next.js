@@ -1,0 +1,128 @@
+#big-title {
+    margin: 60px auto 0 auto;
+    text-align: center;
+    font-size: 2rem;
+    color: white;
+    background-image: linear-gradient(90deg, rgb(236, 187, 236), rgb(139, 222, 231), rgb(187, 196, 236));
+
+    padding: 1rem;
+    border-radius: 40px;
+    box-shadow: 0 0 50px 0 rgba(197, 197, 197, 0.5);
+
+    background-size: 800% 800%;
+    animation: GradietionAnimation 9s ease infinite;
+}
+
+.index{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: solid 20px #e3f6fc;
+}
+.index div {
+    text-align: center;
+}
+
+.menuList{
+    height: 75vh;
+}
+
+
+.container {
+    display: grid;
+
+    margin-top: 30px;
+    grid-template-columns: 1fr 1.4fr;
+    /* grid-template-rows: repeat(4, 1fr); */
+    grid-column-gap: 20px;
+    grid-row-gap: 40px;
+    justify-items: center;
+    align-items: center;
+
+    height: 70vh;
+}
+
+.grid_box {
+    /*padding: 30px;*/
+
+    background-color: #ffffff28;
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+
+    box-shadow: 0 0 35px 0 rgba(155, 155, 155, 0.329);
+}
+
+.scroll {
+    overflow-y: scroll;
+    -ms-overflow-style: none;    /* IE, Edge 対応 */
+    scrollbar-width: none;       /* Firefox 対応 */
+}
+
+.scroll::-webkit-scrollbar{
+    display: none;
+}
+
+.container .spacer  {
+    font-size: 0.95rem;
+    /*width: 100%;*/
+    border-collapse: collapse;
+    border-spacing: 0;
+
+    margin: 30px 30px 0;
+    /*height: fit-content;*/
+
+    background-image: linear-gradient(45deg, rgba(236, 187, 236, 0.4), rgb(139, 222, 231, 0.4), rgb(187, 196, 236, 0.4));
+    background-size: 800% 800%;
+    animation: GradietionAnimation 9s ease infinite;
+    border-radius: 20px;
+}
+
+/*.container th{*/
+/*    padding: 20px;*/
+/*}*/
+
+
+/*.container td {*/
+/*    margin: 10px;*/
+/*    padding: 10px;*/
+/*    font-weight: bold;*/
+/*}*/
+
+/*.container .item{*/
+    /*cursor: pointer;*/
+    /*border-bottom: solid 20px #e3f6fc;*/
+/*}*/
+
+.input_border {
+    color: #6e6e6e;
+    width: 100%;
+    height: 100%;
+    border: solid 4px #e3f6fc ;
+    border-radius: 10px;
+}
+
+
+.y_grid {
+    display: grid;
+    grid-template-rows: 2.6fr 1fr;
+}
+
+/* .checkout_menue tr{
+    border-bottom: solid 30px #e3f6fc;
+    padding: 100px;
+}
+
+.checkout_menue td{
+    padding: 20px 10px;
+} */
+
+#checkout_submit {
+    margin: 30px 0;
+    background-color: #6e6e6e;
+    color: white;
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 1.1rem;   
+}

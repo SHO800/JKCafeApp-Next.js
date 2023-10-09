@@ -1,0 +1,56 @@
+.item{
+    border-bottom: solid 20px #e3f6fc;
+    padding: 10px 20px;
+    position: relative;
+}
+.item form{
+    height: auto;
+    display: flex;
+}
+.item form > button{
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+}
+.item button:active {
+    background: rgba(120, 120, 120, 0.3);
+}
+.item form span{
+    display: flex;
+    flex-direction: row;
+}
+.item form div span input[type="number"] {
+    /*display: inline-block;*/
+    text-align: left;
+    width: 2rem;
+}
+.item form div{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    white-space: pre-wrap;
+}
+.item form div input {
+    width: 100%;
+    white-space: normal;
+}
+.item form div input[type="number"]{
+    text-align: center;
+    display: inline;
+    /*width: auto;*/
+    -moz-appearance:textfield;
+}
+.item input[type="number"]::-webkit-outer-spin-button,
+.item input[type="number"]::-webkit-inner-spin-button {
+    /*数字の右のスピンボタンを消して中央揃えできるようにする*/
+    -webkit-appearance: none;
+    margin: 0;
+}
+.item form div button[disabled]{ /*すなわち何かの表示用のボタン*/
+    width: 100%;
+    color: black;
+    text-align: left;
+}
