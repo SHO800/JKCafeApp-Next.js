@@ -1,3 +1,21 @@
+.spacer  {
+    height: 100%;
+    font-size: 0.95rem;
+    border-collapse: collapse;
+    max-height: 100%;
+
+    background-image: linear-gradient(45deg, rgba(236, 187, 236, 0.4), rgb(139, 222, 231, 0.4), rgb(187, 196, 236, 0.4));
+    background-size: 800% 800%;
+    animation: GradietionAnimation 9s ease infinite;
+    border-radius: 20px;
+}
+
+.menuList{
+    flex: 1;
+    max-height: 100%;
+}
+
+/* 左側のリスト */
 .item{
     border-bottom: solid 20px #e3f6fc;
     padding: 10px 20px;

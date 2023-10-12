@@ -8,7 +8,7 @@ import {HandleAddOrderContext} from "@/app/register/ordersContext";
 export function MenuList({menus}: {menus:MenuData}) {
     return (
         <div className={`${Registers.grid_box} ${Registers.table}`}>
-            <div className={Registers.spacer}>
+            <div className={MenuLists.spacer}>
                 <div className={Registers.index}>
                     <div style={{width:"15%"}}>商品番号</div>
                     <div style={{width:"70%"}}>商品名</div>
@@ -16,7 +16,7 @@ export function MenuList({menus}: {menus:MenuData}) {
                     {/*<div style={{width:"10%"}}>個数</div>*/}
                     {/*<div style={{width:"10%"}}>追加</div>*/}
                 </div>
-                <div className={`${Registers.menuList} ${Registers.scroll}`}>
+                <div className={`${MenuLists.menuList} ${Registers.scroll}`}>
                     <Menus menus={menus}/>
 
                 </div>

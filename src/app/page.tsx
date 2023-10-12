@@ -16,6 +16,7 @@ export default function Home() {
               return(
                   <div key={menu} className={`${position} ${Homes.middle_menue}`} style={{ position: 'relative'}}>
                     <Image
+                        style={{objectFit: "cover", left: 0, top: 0, position: "absolute"}}
                         src={`/img/menue${menu}.jpg`}
                         alt='menu'
                         fill

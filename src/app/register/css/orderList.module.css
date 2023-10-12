@@ -1,4 +1,24 @@
-/* 左側のリスト */
+.spacer  {
+    height: 100%;
+    font-size: 0.95rem;
+    border-collapse: collapse;
+    max-height: 88%;
+    display: flex;
+    flex-direction: column;
+    /*grid-auto-flow: column;*/
+
+    background-image: linear-gradient(45deg, rgba(236, 187, 236, 0.4), rgb(139, 222, 231, 0.4), rgb(187, 196, 236, 0.4));
+    background-size: 800% 800%;
+    animation: GradietionAnimation 9s ease infinite;
+    border-radius: 20px;
+}
+
+.menuList{
+    flex: 1;
+    max-height: 100%;
+}
+
+/* 右側のリスト */
 .item{
     border-bottom: solid 20px #e3f6fc;
     padding: 10px 20px;
@@ -87,3 +107,18 @@
 .list .sum input{
     font-size: 1.5rem;
 }
+
+.checkout {
+    height: 10rem;
+}
+
+#checkout_submit {
+    margin: 5px 0;
+    background-color: #6e6e6e;
+    color: white;
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+}
+

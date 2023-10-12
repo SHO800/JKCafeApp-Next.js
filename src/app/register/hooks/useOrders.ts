@@ -1,6 +1,5 @@
-import {FormEvent, useCallback, useState} from "react";
+import React, {FormEvent, useCallback, useState} from "react";
 import {MenuData, OrderData, OrderDetail, ToppingData} from "@/app/register/itemTypes";
-import {type} from "os";
 
 export const useOrders = (menus: MenuData) : OrdersHooksType => {
     // 必要なもの 注文の追加 追加されたものの数を変更
@@ -20,47 +19,46 @@ export const useOrders = (menus: MenuData) : OrdersHooksType => {
             return [...prevState, addData];
         })
 
-        // const prevItemIndex = prevState.findIndex(item => item.id == id);
-        // if (prevItemIndex > -1){ // すでに同じ商品が追加されていたなら
-        //     // ディープコピーする
-        //     const newData: OrderDetail[] = prevState.map(item => {
-        //         return JSON.parse(JSON.stringify(item));
-        //     });
-        //
-        //     const modifyData: OrderData = newData[prevItemIndex];
-        //     modifyData.quantity += 1;
-        //     newData[prevItemIndex] = convertToOrderDetail(menus, modifyData);
-        //
-        //     return newData;
-        // }else{
-        //     const defaultData: OrderData = {
-        //         id: id,
-        //         quantity: 1,
-        //         topping: null
-        //     }
-        //     const addData: OrderDetail = convertToOrderDetail(menus, defaultData);
-        //     return [...prevState, addData];
-        // }
     }, [menus])
-    const handleChangeBaseQuantity = useCallback((e: InputEvent) => {
+
+    const handleChangeBaseQuantity = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>, quantity: number) => {
+        // quantityに与えられた数を個数のところに足します。もし結果が0以下になったり、0が与えられると削除します。
         const button = e.currentTarget as HTMLButtonElement;
-        const index = button.value;
-        // ボタンにindexを設定したのでここから情報の変更を行う
-    }, [])
+
+        setCurrentOrders((prevState) => {
+            const rvIndex = parseInt(button.value);
+            const index = prevState.length - rvIndex -1
+            const newData: OrderDetail[] = arrayDeepCopy(prevState);
+            const modifyData: OrderData = newData[index];
+
+            modifyData.quantity += quantity;
+            if(quantity == 0 || modifyData.quantity < 1){
+                newData.splice(index, 1);
+            }else{
+                newData[index] = convertToOrderDetail(menus, modifyData);
+            }
+
+            return newData;
+        })
+    }, [menus])
 
     return {
         currentOrders,
-        handleAddOrder
+        handleAddOrder,
+        handleChangeBaseQuantity
     }
-
-    // return [currentOrderDetails, {
-    //     addOrder,
-    //
-    // }]
 }
 export type OrdersHooksType = {
     currentOrders: OrderDetail[],
     handleAddOrder: (e: FormEvent<HTMLFormElement>) => void
+    handleChangeBaseQuantity: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, quantity: number) => void
+}
+
+function arrayDeepCopy<T>(array: T[]): T[]  {
+    // ディープコピーするやつ
+    return array.map(item => {
+        return JSON.parse(JSON.stringify(item));
+    });
 }
 
 function convertToOrderDetail(menuData: MenuData, orderData: OrderData): OrderDetail {

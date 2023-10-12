@@ -15,7 +15,7 @@
 .middle_menue {
     margin: 20px;
     /*padding-top: 20px;*/
-    
+
     background-color: #ffffff28;
     border-radius: 20px;
     width: 100%;
@@ -32,6 +32,9 @@
     animation-direction:normal;
 
     overflow: hidden;
+}
+.middle_menue > {
+    object-fit: cover;
 }
 .menu_left{
     grid-row: 1 / 3;
