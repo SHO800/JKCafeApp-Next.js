@@ -5,27 +5,32 @@ import {MenuData, OrderData, OrderDetail} from "@/app/register/itemTypes";
 import {OrdersHooksType} from "@/app/register/hooks/useOrders";
 
 export default function OrderList({ordersHooks}: {ordersHooks: OrdersHooksType}) {
+
+    const sum = ordersHooks.currentOrders.map((order) => {
+        return order.sum
+    })
+
     return (
         <>
         <div className={`${Registers.grid_box} ${Registers.table}`}>
             <div className={OrderLists.spacer}>
                 <div className={Registers.index}>
-                    {/*<div style={{width:"10%"}}>商品番号</div>*/}
                     <div style={{width:"40%"}}>商品名</div>
                     <div style={{width:"10%"}}>単価</div>
                     <div style={{width:"40%"}}>個数</div>
                     <div style={{width:"10%"}}>小計</div>
-                    {/*<div style={{width:"10%"}}>削除</div>*/}
                 </div>
                 <div className={`${OrderLists.menuList} ${Registers.scroll}`}>
-                    <Orders ordersHooks={ordersHooks}/>
+                    <div className={OrderLists.order_wrapper}>
+                        <Orders ordersHooks={ordersHooks}/>
+                    </div>
                 </div>
 
             </div>
                     <div className={OrderLists.checkout}>
                         <div style={{display: "flex", alignItems: "end", justifyContent: "space-between"}}>
                             <p>合計</p>
-                            <p style={{paddingRight: "50px", fontSize: "2rem"}} id="sum-value"> - </p>
+                            <p style={{paddingRight: "50px", fontSize: "2rem"}} id="sum-value"> {} </p>
                         </div>
                         <div style={{borderBottom: "solid 5px #bdbdbd"}}></div>
                         <form action="{{ url_for('checkout_submit') }}" method="POST">

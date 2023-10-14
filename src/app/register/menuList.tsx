@@ -13,12 +13,9 @@ export function MenuList({menus}: {menus:MenuData}) {
                     <div style={{width:"15%"}}>商品番号</div>
                     <div style={{width:"70%"}}>商品名</div>
                     <div style={{width:"15%"}}>単価</div>
-                    {/*<div style={{width:"10%"}}>個数</div>*/}
-                    {/*<div style={{width:"10%"}}>追加</div>*/}
                 </div>
                 <div className={`${MenuLists.menuList} ${Registers.scroll}`}>
                     <Menus menus={menus}/>
-
                 </div>
             </div>
         </div>
