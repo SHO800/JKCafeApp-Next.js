@@ -5,7 +5,7 @@ export type MenuData = {
         text: string
         value: number
         topping: null | {
-            [name: string]:{
+            [name: string]: {
                 // プロパティ追加するかもなのでオブジェクトにしてる
                 value: number
             }

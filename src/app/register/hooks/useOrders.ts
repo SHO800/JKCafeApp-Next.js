@@ -16,7 +16,7 @@ export const useOrders = (menus: MenuData) : OrdersHooksType => {
                 topping: null
             }
             const addData: OrderDetail = convertToOrderDetail(menus, defaultData);
-            return [...prevState, addData];
+            return [addData, ...prevState]; // もし上へと追加にしたければこれを逆に
         })
 
     }, [menus])
@@ -30,12 +30,40 @@ export const useOrders = (menus: MenuData) : OrdersHooksType => {
             const index = prevState.length - rvIndex -1
             const newData: OrderDetail[] = arrayDeepCopy(prevState);
             const modifyData: OrderData = newData[index];
+            console.log(rvIndex)
 
             modifyData.quantity += quantity;
-            if(quantity == 0 || modifyData.quantity < 1){
+            if(quantity == 0){
                 newData.splice(index, 1);
-            }else{
+            }else if(modifyData.quantity < 0){
+              return prevState;
+            } else{
                 newData[index] = convertToOrderDetail(menus, modifyData);
+            }
+
+            return newData;
+        })
+    }, [menus])
+
+    const handleChangeOptionQuantity = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>, quantity: number) => {
+        const button = e.currentTarget as HTMLButtonElement;
+
+        setCurrentOrders((prevState) => {
+            const splitPosition = button.value.indexOf(":");
+            const itemBaseRvIndex = parseInt(button.value.slice(0, splitPosition));
+            const itemBaseIndex = prevState.length - itemBaseRvIndex -1;
+            const itemOptionName = button.value.slice(splitPosition+1);
+
+            const newData: OrderDetail[] = arrayDeepCopy(prevState);
+            const modifyData: OrderData = newData[itemBaseIndex];
+            const modifyToppingsData = modifyData.topping
+
+            if (!(modifyToppingsData && modifyToppingsData[itemOptionName])) return prevState;
+            modifyToppingsData[itemOptionName].quantity += quantity;
+            if(modifyToppingsData[itemOptionName].quantity < 0){
+                return prevState;
+            }else{
+                newData[itemBaseIndex] = convertToOrderDetail(menus, modifyData);
             }
 
             return newData;
@@ -45,13 +73,15 @@ export const useOrders = (menus: MenuData) : OrdersHooksType => {
     return {
         currentOrders,
         handleAddOrder,
-        handleChangeBaseQuantity
+        handleChangeBaseQuantity,
+        handleChangeOptionQuantity,
     }
 }
 export type OrdersHooksType = {
     currentOrders: OrderDetail[],
     handleAddOrder: (e: FormEvent<HTMLFormElement>) => void
     handleChangeBaseQuantity: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, quantity: number) => void
+    handleChangeOptionQuantity: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, quantity: number) => void
 }
 
 function arrayDeepCopy<T>(array: T[]): T[]  {
