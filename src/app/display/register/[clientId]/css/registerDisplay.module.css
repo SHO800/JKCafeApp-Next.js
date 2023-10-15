@@ -1,0 +1,197 @@
+.index {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: solid 20px #e3f6fc;
+}
+
+.index div {
+    text-align: center;
+}
+
+.order_wrapper {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+.spacer {
+    height: 100%;
+    font-size: 0.95rem;
+    border-collapse: collapse;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    /*grid-auto-flow: column;*/
+
+    background-image: linear-gradient(45deg, rgba(236, 187, 236, 0.4), rgb(139, 222, 231, 0.4), rgb(187, 196, 236, 0.4));
+    background-size: 800% 800%;
+    animation: GradietionAnimation 9s ease infinite;
+    border-radius: 20px;
+}
+
+.menuList {
+    flex: 1;
+    position: relative;
+    max-height: 100%;
+}
+
+.order_wrapper {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+/* 右側のリスト */
+.item {
+    border-bottom: solid 20px #e3f6fc;
+    padding: 10px 20px;
+}
+
+.item form {
+    height: auto;
+    display: flex;
+}
+
+.item form span {
+    display: flex;
+    flex-direction: row;
+}
+
+.item form div span input[type="number"] {
+    /*display: inline-block;*/
+    text-align: left;
+    width: 2rem;
+}
+
+.item form div {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    white-space: pre-wrap;
+}
+
+.item form div input {
+    width: 100%;
+    white-space: normal;
+}
+
+.item form div input[type="number"] {
+    text-align: center;
+    display: inline;
+    /*width: auto;*/
+    -moz-appearance: textfield;
+}
+
+.item input[type="number"]::-webkit-outer-spin-button,
+.item input[type="number"]::-webkit-inner-spin-button {
+    /*数字の右のスピンボタンを消して中央揃えできるようにする*/
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.item form div button[disabled] { /*すなわち何かの表示用のボタン*/
+    width: 100%;
+    color: black;
+    text-align: left;
+}
+
+/* 右側の注文リスト */
+.list {
+    display: flex;
+    flex-direction: column;
+}
+
+.list .item_base {
+    font-size: 1.1rem;
+    margin: 0.5rem 0 1rem;
+}
+
+.list .item_base span{
+    margin: auto;
+}
+
+.list .option {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    /*box-sizing: border-box;*/
+    padding-top: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.list .option .toppings {
+    padding: 0.25rem 0;
+    height: 50%;
+    border-top: black 1px dotted;
+    /*background: gray;*/
+}
+
+.list .sum {
+    text-align: right;
+    height: 2rem;
+    font-size: 1.3rem;
+}
+
+
+.checkout {
+    height: 10rem;
+}
+
+#checkout_submit {
+    margin: 5px 0;
+    background-color: #6e6e6e;
+    color: white;
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+}
+
+.container {
+    display: grid;
+
+    margin: 0 4rem 0;
+    grid-template-columns: 1fr 1.4fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 40px;
+    justify-items: center;
+    align-items: center;
+
+    /*height: 88vh;*/
+    height: 100%;
+    min-height: 0;
+    max-height: 90%;
+}
+
+.container button:active {
+    background: rgba(120, 120, 120, 0.3);
+}
+
+.grid_box {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    /*max-height: 100%;*/
+    background-color: #ffffff28;
+    border-radius: 20px;
+    box-shadow: 0 0 35px 0 rgba(155, 155, 155, 0.329);
+}
+
+.scroll {
+    overflow-y: scroll;
+    -ms-overflow-style: none; /* IE, Edge 対応 */
+    scrollbar-width: none; /* Firefox 対応 */
+
+}
+
+.scroll::-webkit-scrollbar {
+    display: none;
+}

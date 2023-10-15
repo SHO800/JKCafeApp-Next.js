@@ -14,6 +14,8 @@ export type MenuData = {
 }
 
 // apiとかで少しでも非同期の付加を軽減するために使用 (これ要る?())
+// 結局いらんかった
+// 改修コスト馬鹿にならない きれそう
 export type OrderData = {
     id: number
     quantity: number

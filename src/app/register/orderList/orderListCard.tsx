@@ -73,7 +73,7 @@ function ItemOption({order, ordersHooks, index}: {
                 if (!topping) return;
                 const value = topping[name].value;
                 const quantity = topping[name].quantity;
-                const couponAmount = topping[name].couponAmount;
+                // const couponAmount = topping[name].couponAmount;
                 const sum = value * quantity
 
                 return (
