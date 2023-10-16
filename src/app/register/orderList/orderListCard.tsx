@@ -1,8 +1,8 @@
 "use client"
 import Registers from "@/app/register/css/register.module.css";
 import OrderLists from "@/app/register/css/orderList.module.css"
-import {OrderDetail} from "@/app/register/itemTypes";
-import {OrdersHooksType} from "@/app/register/hooks/useOrders";
+import {OrderDetail} from "@/app/Types/itemTypes";
+import {OrdersHooksType} from "@/app/hooks/useOrders";
 
 export default function OrderListCard({order, ordersHooks, index}: {
     order: OrderDetail,

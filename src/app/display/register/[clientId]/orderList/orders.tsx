@@ -1,7 +1,7 @@
 "use client"
 import OrderListCard from "@/app/display/register/[clientId]/orderList/orderListCard";
 import RegisterDisplays from "@/app/display/register/[clientId]/css/registerDisplay.module.css"
-import {OrderDetail} from "@/app/register/itemTypes";
+import {OrderDetail} from "@/app/Types/itemTypes";
 
 export default function Orders({currentOrders}: { currentOrders: OrderDetail[] }) {
     if (!currentOrders) return null;

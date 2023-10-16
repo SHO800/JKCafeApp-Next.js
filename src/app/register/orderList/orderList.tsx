@@ -1,5 +1,5 @@
 "use client"
-import {OrdersHooksType} from "@/app/register/hooks/useOrders";
+import {OrdersHooksType} from "@/app/hooks/useOrders";
 import Registers from "@/app/register/css/register.module.css";
 import OrderLists from "@/app/register/css/orderList.module.css";
 import Orders from "@/app/register/orderList/orders";

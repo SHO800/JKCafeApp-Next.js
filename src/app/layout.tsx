@@ -1,11 +1,10 @@
-import type { Metadata } from 'next'
-
-import Header from "./components/header/header"
+import type {Metadata} from 'next'
 import './globals.css'
 import './reset.css'
 import './animation.css'
 
-import { Inter } from 'next/font/google'
+import {Inter} from 'next/font/google'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -21,7 +20,7 @@ export default function RootLayout({children,}: {  children: React.ReactNode}) {
         <meta charSet="UTF-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
       </head>
-      <body className={inter.className}>
+      <body suppressHydrationWarning className={inter.className}>
         {/*<Header />*/}
         {children}
       </body>

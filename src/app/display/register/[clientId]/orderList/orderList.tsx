@@ -3,7 +3,10 @@ import RegisterDisplays from "@/app/display/register/[clientId]/css/registerDisp
 import Orders from "@/app/display/register/[clientId]/orderList/orders";
 import OrderListIndex from "@/app/register/orderList/orderListIndex";
 import {useEffect, useState} from "react";
-import {OrderDetail} from "@/app/register/itemTypes";
+import {OrderDetail} from "@/app/Types/itemTypes";
+import {OrdersHooksType} from "@/app/hooks/useOrders";
+import OrderLists from "@/app/register/css/orderList.module.css";
+import Registers from "@/app/register/css/register.module.css";
 
 export default function OrderList({currentOrders}: { currentOrders: OrderDetail[] }) {
     // 全注文の合計値段を計算
@@ -26,6 +29,13 @@ export default function OrderList({currentOrders}: { currentOrders: OrderDetail[
                     <div className={`${RegisterDisplays.menuList} ${RegisterDisplays.scroll}`}>
                         <Orders currentOrders={currentOrders}/>
                     </div>
+                </div>
+                <div className={OrderLists.checkout}>
+                    <div style={{display: "flex", alignItems: "end", justifyContent: "space-between"}}>
+                        <p>合計</p>
+                        <p style={{paddingRight: "50px", fontSize: "4rem"}} id="sum-value"> {sum}円 </p>
+                    </div>
+                    <div style={{borderBottom: "solid 5px #bdbdbd"}}></div>
                 </div>
             </div>
         </>

@@ -1,7 +1,7 @@
 "use client"
 import Registers from "@/app/register/css/register.module.css";
 import MenuLists from "@/app/register/css/menuList.module.css"
-import {MenuData} from "@/app/register/itemTypes";
+import {MenuData} from "@/app/Types/itemTypes";
 import {useContext} from "react";
 import {HandleAddOrderContext} from "@/app/register/ordersContext";
 

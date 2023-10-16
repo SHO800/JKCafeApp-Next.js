@@ -1,6 +1,6 @@
 "use client"
 import RegisterDisplays from "@/app/display/register/[clientId]/css/registerDisplay.module.css"
-import {OrderDetail} from "@/app/register/itemTypes";
+import {OrderDetail} from "@/app/Types/itemTypes";
 
 export default function OrderListCard({order, index}: {
     order: OrderDetail,
