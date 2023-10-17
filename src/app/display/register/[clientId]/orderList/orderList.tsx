@@ -4,9 +4,7 @@ import Orders from "@/app/display/register/[clientId]/orderList/orders";
 import OrderListIndex from "@/app/register/orderList/orderListIndex";
 import {useEffect, useState} from "react";
 import {OrderDetail} from "@/app/Types/itemTypes";
-import {OrdersHooksType} from "@/app/hooks/useOrders";
 import OrderLists from "@/app/register/css/orderList.module.css";
-import Registers from "@/app/register/css/register.module.css";
 import OrderSum from "@/app/components/orderSum";
 
 export default function OrderList({currentOrders}: { currentOrders: OrderDetail[] }) {

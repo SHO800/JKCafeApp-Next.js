@@ -1,11 +1,11 @@
 import {useSocket} from "@/app/hooks/useSocket";
-import {useEffect, useState} from "react";
+import {Dispatch, SetStateAction, useMemo, useState} from "react";
 import {OrderDetail} from "@/app/Types/itemTypes";
 
-export const useRegiDisplaySockets = (apiUrl: string, clientId: number): RegiDisplayHooksType => {
-    const nameSpace = "display/register"
-    const [currentOrders, setCurrentOrders] = useState<OrderDetail[]>([])
-    const {socket} = useSocket(apiUrl, nameSpace, (socket) => {
+export const useRegiDisplaySockets = (apiUrl: string, clientId: number, setCurrentOrders: Dispatch<SetStateAction<OrderDetail[]>>): RegiDisplayHooksType => {
+    const nameSpace = useMemo(() => "display/register", [])
+    console.log("useRegiDisplay")
+    useSocket(apiUrl, nameSpace, (socket) => {
         socket.on("temp_order_data", (msg) => {
             setCurrentOrders(msg);
         })
@@ -14,10 +14,9 @@ export const useRegiDisplaySockets = (apiUrl: string, clientId: number): RegiDis
 
 
     return {
-        currentOrders,
     }
 }
 
 export type RegiDisplayHooksType = {
-    currentOrders: OrderDetail[],
+
 }

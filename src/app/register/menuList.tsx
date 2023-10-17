@@ -2,7 +2,7 @@
 import Registers from "@/app/register/css/register.module.css";
 import MenuLists from "@/app/register/css/menuList.module.css"
 import {MenuData} from "@/app/Types/itemTypes";
-import {useContext} from "react";
+import {memo, useContext} from "react";
 import {HandleAddOrderContext} from "@/app/register/ordersContext";
 
 function MenuListIndex() {
@@ -15,7 +15,7 @@ function MenuListIndex() {
     )
 }
 
-export function MenuList({menus}: { menus: MenuData }) {
+export const MenuList = memo(function ({menus}: { menus: MenuData }) {
     return (
         <div className={`${Registers.grid_box} ${Registers.table}`}>
             <div className={MenuLists.spacer}>
@@ -26,7 +26,8 @@ export function MenuList({menus}: { menus: MenuData }) {
             </div>
         </div>
     )
-}
+})
+MenuList.displayName = "MenuList"
 
 // MenuListButtonのかたまりを返すだけのコンポーネント
 function Menus({menus}: { menus: MenuData }) {

@@ -2,26 +2,23 @@
 import Registers from "@/app/register/css/register.module.css";
 import {MenuList} from "@/app/register/menuList";
 import {MenuData} from "@/app/Types/itemTypes";
-import {HandleAddOrderContext} from "@/app/register/ordersContext";
-import {useOrders} from "@/app/hooks/useOrders";
-import OrderList from "@/app/register/orderList/orderList";
 import {useRegiSockets} from "@/app/hooks/useRegiSockets";
 import {OrderHooksWrapper} from "@/app/register/orderList/OrderHooksWrapper";
-
-// 1階層上でmenusは取得しておく
 import React, {memo} from 'react';
 
-export const RegisterSocketsWrapper = memo(function ({ menus, apiUrl }: {
+// 1階層上でmenusは取得しておく
+export const RegisterSocketsWrapper = memo(function ({ menus, apiUrl, clientId }: {
     menus: MenuData,
-    apiUrl: string
+    apiUrl: string,
+    clientId: number
 }) {
     console.log("wrapper");
-    const registerSockets = useRegiSockets(apiUrl);
+    const registerSockets = useRegiSockets(apiUrl, clientId);
     const sendOrderData = registerSockets.sendOrderData;
 
     return (
         <>
-            <p style={{ margin: 0, textAlign: "right", fontSize: "0.8rem" }}>ID: {registerSockets.clientId}</p>
+            <p style={{ margin: 0, textAlign: "right", fontSize: "0.8rem" }}>ID: {clientId}</p>
             <div className={Registers.container}>
                 <OrderHooksWrapper menus={menus} sendOrderData={sendOrderData}>
                     <MenuList menus={menus} />
