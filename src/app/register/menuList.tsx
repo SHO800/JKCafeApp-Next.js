@@ -5,15 +5,21 @@ import {MenuData} from "@/app/Types/itemTypes";
 import {useContext} from "react";
 import {HandleAddOrderContext} from "@/app/register/ordersContext";
 
+function MenuListIndex() {
+    return (
+        <div className={Registers.index}>
+            <div style={{width: "15%"}}>商品番号</div>
+            <div style={{width: "70%"}}>商品名</div>
+            <div style={{width: "15%"}}>単価</div>
+        </div>
+    )
+}
+
 export function MenuList({menus}: { menus: MenuData }) {
     return (
         <div className={`${Registers.grid_box} ${Registers.table}`}>
             <div className={MenuLists.spacer}>
-                <div className={Registers.index}>
-                    <div style={{width: "15%"}}>商品番号</div>
-                    <div style={{width: "70%"}}>商品名</div>
-                    <div style={{width: "15%"}}>単価</div>
-                </div>
+                <MenuListIndex/>
                 <div className={`${MenuLists.menuList} ${Registers.scroll}`}>
                     <Menus menus={menus}/>
                 </div>
@@ -39,9 +45,7 @@ function MenuListButton({id, menu_name, value}: {
     menu_name: string,
     value: number
 }) {
-
     const handleAddOrder = useContext(HandleAddOrderContext);
-
 
     return (
         <div className={MenuLists.item}>
@@ -57,15 +61,6 @@ function MenuListButton({id, menu_name, value}: {
                 <div style={{width: "15%"}}>
                     <input name="value" value={value} type="number" readOnly></input>
                 </div>
-                {/*<div style={{width:"10%"}}>*/}
-                {/*    <select name="quantity" className={Registers.input_border}>*/}
-                {/*        <option value="1">１</option>*/}
-                {/*        <option value="2">２</option>*/}
-                {/*        <option value="3">３</option>*/}
-                {/*        <option value="4">４</option>*/}
-                {/*    </select>*/}
-                {/*</div>*/}
-                {/*<div style={{width:"10%"}}></div>*/}
                 <button type="submit"></button>
             </form>
         </div>

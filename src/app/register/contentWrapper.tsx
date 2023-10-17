@@ -13,20 +13,16 @@ export function ContentWrapper({menus, apiUrl}: {
 }) {
     const ordersHooks = useOrders(menus);
     const registerHooks = useRegiHooks(apiUrl, ordersHooks);
-    const currentOrders = ordersHooks.currentOrders
     const handleAddOrder = ordersHooks.handleAddOrder
-
 
     return (
         <>
             <p style={{margin: 0, textAlign: "right", fontSize: "0.8rem"}}>ID: {registerHooks.clientId}</p>
             <div className={Registers.container}>
-                <OrdersContext.Provider value={currentOrders}>
-                    <HandleAddOrderContext.Provider value={handleAddOrder}>
-                        <MenuList menus={menus}/>
-                        <OrderList ordersHooks={ordersHooks}/>
-                    </HandleAddOrderContext.Provider>
-                </OrdersContext.Provider>
+                <HandleAddOrderContext.Provider value={handleAddOrder}>
+                    <MenuList menus={menus}/>
+                </HandleAddOrderContext.Provider>
+                <OrderList ordersHooks={ordersHooks}/>
             </div>
         </>
     )

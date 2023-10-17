@@ -7,6 +7,7 @@ import {OrderDetail} from "@/app/Types/itemTypes";
 import {OrdersHooksType} from "@/app/hooks/useOrders";
 import OrderLists from "@/app/register/css/orderList.module.css";
 import Registers from "@/app/register/css/register.module.css";
+import OrderSum from "@/app/components/orderSum";
 
 export default function OrderList({currentOrders}: { currentOrders: OrderDetail[] }) {
     // 全注文の合計値段を計算
@@ -31,11 +32,7 @@ export default function OrderList({currentOrders}: { currentOrders: OrderDetail[
                     </div>
                 </div>
                 <div className={OrderLists.checkout}>
-                    <div style={{display: "flex", alignItems: "end", justifyContent: "space-between"}}>
-                        <p>合計</p>
-                        <p style={{paddingRight: "50px", fontSize: "4rem"}} id="sum-value"> {sum}円 </p>
-                    </div>
-                    <div style={{borderBottom: "solid 5px #bdbdbd"}}></div>
+                    <OrderSum sum={sum} fontSize={"4rem"}/>
                 </div>
             </div>
         </>

@@ -4,16 +4,23 @@ import {DefaultEventsMap} from "@socket.io/component-emitter";
 import {getApiUrl} from "@/app/functions/getApiUrl";
 
 
-const createSocket = (apiUrl: string, nameSpace: string): Socket<DefaultEventsMap, DefaultEventsMap> => {
+const createSocket = (apiUrl: string, nameSpace: string, ): Socket<DefaultEventsMap, DefaultEventsMap> => {
     return io(apiUrl + nameSpace, {withCredentials: true});
 }
 
 // 極力useMemoを使って呼び出すように?
 
-export const useSocket = (apiUrl: string, nameSpace: string): WebHooksType => {
+export const useSocket = (
+    apiUrl: string,
+    nameSpace: string,
+    callbacks: (socket: Socket<DefaultEventsMap, DefaultEventsMap>) => void
+): WebHooksType => {
     const [socket, setSocket] = useState<Socket<DefaultEventsMap, DefaultEventsMap>>(useMemo(() => {
-        return createSocket(apiUrl, nameSpace)
-    }, [nameSpace, apiUrl]));
+        const socket = createSocket(apiUrl, nameSpace);
+        callbacks(socket);
+        return socket;
+    }, [apiUrl, nameSpace, callbacks]));
+
     return {
         socket,
         setSocket,
