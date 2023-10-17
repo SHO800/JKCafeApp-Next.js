@@ -2,8 +2,13 @@ import React, {FormEvent, useCallback, useEffect, useState} from "react";
 import {MenuData, OrderData, OrderDetail, ToppingData} from "@/app/Types/itemTypes";
 import {WebHooksType} from "@/app/hooks/useSocket";
 
-export const useOrders = (menus: MenuData): OrdersHooksType => {
+export const useOrders = (menus: MenuData, sendOrderData: (orderDetails: OrderDetail[]) => void): OrdersHooksType => {
+    console.log()
     const [currentOrders, setCurrentOrders] = useState<OrderDetail[]>([])
+
+    useEffect(() => {
+        sendOrderData(currentOrders)
+    }, [sendOrderData, currentOrders])
 
     const handleAddOrder = useCallback((e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()

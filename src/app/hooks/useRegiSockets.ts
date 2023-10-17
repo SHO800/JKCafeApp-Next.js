@@ -1,10 +1,12 @@
 import {useSocket} from "@/app/hooks/useSocket";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
 import {OrderDetail} from "@/app/Types/itemTypes";
 import {OrdersHooksType} from "@/app/hooks/useOrders";
 
-export const useRegiHooks = (apiUrl: string, ordersHooks: OrdersHooksType): RegiHooksType => {
-    const nameSpace = "register"
+export const useRegiSockets = (apiUrl: string): RegiHooksType => {
+    console.log("regihooks")
+    // こいつの再描画をなんとしても止めなければならない
+    const nameSpace = useMemo(() => "register", [])
     const [clientId, setClientId] = useState<number>(-1);
     const {socket, setSocket} = useSocket(apiUrl, nameSpace, (socket) => {
         socket.on("notice_join", (msg) => {
@@ -17,12 +19,9 @@ export const useRegiHooks = (apiUrl: string, ordersHooks: OrdersHooksType): Regi
 
 
     const sendOrderData = useCallback((orderDetails: OrderDetail[]) => {
+        console.log("datasend!", orderDetails)
         socket.emit("temp_order_data", {clientId: clientId, data: JSON.stringify(orderDetails)})
     }, [clientId, socket]);
-
-    useEffect(() => {
-        sendOrderData(ordersHooks.currentOrders)
-    }, [sendOrderData, ordersHooks.currentOrders]);
 
 
     return {

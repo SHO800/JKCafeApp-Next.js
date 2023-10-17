@@ -2,7 +2,7 @@ import {useSocket} from "@/app/hooks/useSocket";
 import {useEffect, useState} from "react";
 import {OrderDetail} from "@/app/Types/itemTypes";
 
-export const useRegiDisplayHooks = (apiUrl: string, clientId: number): RegiDisplayHooksType => {
+export const useRegiDisplaySockets = (apiUrl: string, clientId: number): RegiDisplayHooksType => {
     const nameSpace = "display/register"
     const [currentOrders, setCurrentOrders] = useState<OrderDetail[]>([])
     const {socket} = useSocket(apiUrl, nameSpace, (socket) => {

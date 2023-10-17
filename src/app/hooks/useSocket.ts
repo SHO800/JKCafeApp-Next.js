@@ -1,10 +1,10 @@
-import {Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState} from "react";
+import {Dispatch, SetStateAction, useMemo, useState} from "react";
 import {io, Socket} from "socket.io-client";
 import {DefaultEventsMap} from "@socket.io/component-emitter";
-import {getApiUrl} from "@/app/functions/getApiUrl";
 
 
 const createSocket = (apiUrl: string, nameSpace: string, ): Socket<DefaultEventsMap, DefaultEventsMap> => {
+    console.log("connect2")
     return io(apiUrl + nameSpace, {withCredentials: true});
 }
 
@@ -15,7 +15,9 @@ export const useSocket = (
     nameSpace: string,
     callbacks: (socket: Socket<DefaultEventsMap, DefaultEventsMap>) => void
 ): WebHooksType => {
+
     const [socket, setSocket] = useState<Socket<DefaultEventsMap, DefaultEventsMap>>(useMemo(() => {
+        console.log("connect1")
         const socket = createSocket(apiUrl, nameSpace);
         callbacks(socket);
         return socket;

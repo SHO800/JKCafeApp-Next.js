@@ -9,6 +9,7 @@ import OrderSum from "@/app/components/orderSum";
 
 
 export default function OrderList({ordersHooks}: { ordersHooks: OrdersHooksType }) {
+
     // 全注文の合計値段を計算
     const [sum, setSum] = useState(0);
     useEffect(() => {
