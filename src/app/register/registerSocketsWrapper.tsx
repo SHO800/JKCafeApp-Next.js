@@ -5,8 +5,6 @@ import {MenuData} from "@/app/Types/itemTypes";
 import {useRegiSockets} from "@/app/hooks/useRegiSockets";
 import {OrderHooksWrapper} from "@/app/register/OrderLists/OrderHooksWrapper";
 import React, {memo} from 'react';
-import {Simulate} from "react-dom/test-utils";
-import submit = Simulate.submit;
 
 // 1階層上でmenusは取得しておく
 export const RegisterSocketsWrapper = memo(function ({ menus, apiUrl, clientId }: {
@@ -14,7 +12,6 @@ export const RegisterSocketsWrapper = memo(function ({ menus, apiUrl, clientId }
     apiUrl: string,
     clientId: number
 }) {
-    console.log("wrapper");
     const registerSockets = useRegiSockets(apiUrl, clientId);
 
     return (
