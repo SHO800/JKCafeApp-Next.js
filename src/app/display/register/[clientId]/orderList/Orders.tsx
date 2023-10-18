@@ -1,5 +1,5 @@
 "use client"
-import OrderListCard from "@/app/display/register/[clientId]/orderList/orderListCard";
+import OrderListCard from "@/app/display/register/[clientId]/orderList/OrderListCard";
 import RegisterDisplays from "@/app/display/register/[clientId]/css/registerDisplay.module.css"
 import {OrderDetail} from "@/app/Types/itemTypes";
 

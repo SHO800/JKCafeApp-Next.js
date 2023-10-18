@@ -2,10 +2,11 @@
 import {OrdersHooksType} from "@/app/hooks/useOrders";
 import Registers from "@/app/register/css/register.module.css";
 import OrderLists from "@/app/register/css/orderList.module.css";
-import Orders from "@/app/register/orderList/orders";
-import OrderListIndex from "@/app/register/orderList/orderListIndex";
-import {useEffect, useState} from "react";
-import OrderSum from "@/app/components/orderSum";
+import Orders from "@/app/register/OrderLists/Orders";
+import OrderListIndex from "@/app/register/OrderLists/OrderListIndex";
+import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
+import OrderSum from "@/app/components/OrderSum";
+import {ConfirmPanel} from "@/app/register/OrderLists/ConfirmPanel";
 
 
 export default function OrderList({ordersHooks}: { ordersHooks: OrdersHooksType }) {
@@ -22,6 +23,9 @@ export default function OrderList({ordersHooks}: { ordersHooks: OrdersHooksType 
         })
     }, [ordersHooks.currentOrders])
 
+
+    const [confirmPanelStatus, setConfirmPanelStatus] = useState(false);
+
     return (
         <>
             <div className={`${Registers.grid_box} ${Registers.table}`}>
@@ -33,7 +37,8 @@ export default function OrderList({ordersHooks}: { ordersHooks: OrdersHooksType 
                 </div>
                 <div className={OrderLists.checkout}>
                     <OrderSum sum={sum} fontSize={"2rem"}/>
-                    <CheckoutButton/>
+                    <CheckoutButton setStatus={setConfirmPanelStatus}/>
+                    <ConfirmPanel ordersHooks={ordersHooks} sum={sum} status={confirmPanelStatus} setStatus={setConfirmPanelStatus}/>
                 </div>
             </div>
         </>
@@ -41,6 +46,6 @@ export default function OrderList({ordersHooks}: { ordersHooks: OrdersHooksType 
 }
 
 
-function CheckoutButton() {
-    return <button type="submit" name="" id={OrderLists.checkout_submit}>会計を確定</button>
+function CheckoutButton({setStatus}: {setStatus: Dispatch<SetStateAction<boolean>>}) {
+    return <button type="button" onClick={() => setStatus(true)} name="" id={OrderLists.checkout_submit}>会計を終了</button>
 }

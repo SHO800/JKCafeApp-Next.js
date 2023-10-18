@@ -10,7 +10,7 @@ export default async function Register() {
     // api叩いたりするのはここでやる
     const apiUrl = getApiUrl(headers())
     const menus: MenuData = await getMenus(apiUrl + "menus")
-    const clientId: number = await getClientId(apiUrl + "getClientId")
+    const clientId: number = await getClientId(apiUrl + "client-id")
     console.log(clientId)
     console.log("regi")
 

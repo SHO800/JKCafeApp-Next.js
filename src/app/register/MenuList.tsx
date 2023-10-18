@@ -52,8 +52,8 @@ function MenuListButton({id, menu_name, value}: {
         <div className={MenuLists.item}>
             <form onSubmit={(event) => handleAddOrder(event)}>
                 <div style={{width: "15%"}}>
-                        <span style={{margin: "auto"}}>No.
-                        <input name="id" defaultValue={id} type="number" readOnly></input></span>
+                    <span style={{margin: "auto"}}>No.
+                    <input name="id" defaultValue={id} type="number" readOnly></input></span>
                 </div>
                 <div style={{width: "70%"}}>
                     <button name="name" value={menu_name} disabled>{menu_name}</button>

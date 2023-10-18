@@ -1,6 +1,6 @@
 "use client"
 import {OrdersHooksType} from "@/app/hooks/useOrders";
-import OrderListCard from "@/app/register/orderList/orderListCard";
+import OrderListCard from "@/app/register/OrderLists/OrderListCard";
 import OrderLists from "@/app/register/css/orderList.module.css";
 
 export default function Orders({ordersHooks}: { ordersHooks: OrdersHooksType }) {

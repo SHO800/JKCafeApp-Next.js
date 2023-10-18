@@ -2,7 +2,7 @@ import React, {FormEvent, useCallback, useEffect, useState} from "react";
 import {MenuData, OrderData, OrderDetail, ToppingData} from "@/app/Types/itemTypes";
 import {WebHooksType} from "@/app/hooks/useSocket";
 
-export const useOrders = (menus: MenuData, sendOrderData: (orderDetails: OrderDetail[]) => void): OrdersHooksType => {
+export const useOrders = (menus: MenuData, sendOrderData: (orderDetails: OrderDetail[]) => void, submit: (orderDetails: OrderDetail[]) => void): OrdersHooksType => {
     console.log()
     const [currentOrders, setCurrentOrders] = useState<OrderDetail[]>([])
 
@@ -77,11 +77,17 @@ export const useOrders = (menus: MenuData, sendOrderData: (orderDetails: OrderDe
         })
     }, [menus])
 
+    const submitCheckout = useCallback(() => {
+        submit(currentOrders)
+        setCurrentOrders([])
+    }, [submit, currentOrders])
+
     return {
         currentOrders,
         handleAddOrder,
         handleChangeBaseQuantity,
         handleChangeOptionQuantity,
+        submitCheckout: submitCheckout,
     }
 }
 export type OrdersHooksType = {
@@ -89,6 +95,7 @@ export type OrdersHooksType = {
     handleAddOrder: (e: FormEvent<HTMLFormElement>) => void
     handleChangeBaseQuantity: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, quantity: number) => void
     handleChangeOptionQuantity: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, quantity: number) => void
+    submitCheckout: () => void
 }
 
 function arrayDeepCopy<T>(array: T[]): T[] {

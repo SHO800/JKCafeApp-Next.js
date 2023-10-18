@@ -1,7 +1,7 @@
 import Link from "next/link"
 import BigTitles from './bigTitle.module.css'
 
-const bigTitle = () => {
+const BigTitle = () => {
     return (
         <Link href="/register">
             <h1 id={BigTitles.big_title}> JK Café </h1>
@@ -9,4 +9,4 @@ const bigTitle = () => {
     )
 }
 
-export default bigTitle;
+export default BigTitle;

@@ -1,4 +1,4 @@
-import {ContentWrapper} from "@/app/display/register/[clientId]/contentWrapper";
+import {ContentWrapper} from "@/app/display/register/[clientId]/ContentWrapper";
 import {headers} from "next/headers";
 import {getApiUrl} from "@/app/functions/getApiUrl";
 

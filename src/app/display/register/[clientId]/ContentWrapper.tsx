@@ -1,9 +1,9 @@
 'use client'
-import OrderList from "@/app/display/register/[clientId]/orderList/orderList";
+import OrderList from "@/app/display/register/[clientId]/orderList/OrderList";
 import {useRegiDisplaySockets} from "@/app/hooks/useRegiDisplaySockets";
 import {useEffect, useState} from "react";
 import {OrderDetail} from "@/app/Types/itemTypes";
-import {RegiDisplaySockets} from "@/app/display/register/[clientId]/regiDisplaySockets";
+import {RegiDisplaySockets} from "@/app/display/register/[clientId]/RegiDisplaySockets";
 
 export function ContentWrapper({apiUrl, clientId}: {
     apiUrl: string,
