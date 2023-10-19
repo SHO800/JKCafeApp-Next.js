@@ -140,7 +140,7 @@ function convertToOrderDetail(menuData: MenuData, orderData: OrderData): OrderDe
                 }
             }
             // トッピングの値段をsumに反映
-            orderDetail.sum += (quantity - couponAmount) * value;
+            orderDetail.sum += (quantity - couponAmount) * value * orderDetail.quantity;
         })
         if (Object.keys(topping).length > 0) orderDetail["topping"] = topping
     }
