@@ -1,11 +1,11 @@
 "use client"
 import Registers from "@/app/register/css/register.module.css";
 import OrderLists from "@/app/register/css/orderList.module.css"
-import {OrderDetail} from "@/app/Types/itemTypes";
+import {OrderItemDetail} from "@/app/Types/itemTypes";
 import {OrdersHooksType} from "@/app/hooks/useOrders";
 
 export default function OrderListCard({order, ordersHooks, index}: {
-    order: OrderDetail,
+    order: OrderItemDetail,
     ordersHooks: OrdersHooksType,
     index: number
 }) {
@@ -22,7 +22,7 @@ export default function OrderListCard({order, ordersHooks, index}: {
 }
 
 function ItemBase({order, ordersHooks, index}: {
-    order: OrderDetail,
+    order: OrderItemDetail,
     ordersHooks: OrdersHooksType,
     index: number
 }) {
@@ -47,9 +47,11 @@ function ItemBase({order, ordersHooks, index}: {
                 <input name="quantity" value={order.quantity} type="number" readOnly></input>
             </div>
             <div style={{width: "15%"}}>
-                <button value={index} type="button" onClick={e => ordersHooks.handleChangeBaseQuantity(e, 1)}
+                <button value={index} type="button" onClick={e => ordersHooks.handleChangeBaseQuantity(e, 1) }
                     className={`${Registers.input_border} ${OrderLists.quantityButton} ${OrderLists.plus}`}>+
                 </button>
+
+                {/*disabled={order.quantity == 1}*/}
             </div>
             <div style={{width: "2.5%"}}>
 
@@ -62,7 +64,7 @@ function ItemBase({order, ordersHooks, index}: {
 }
 
 function ItemOption({order, ordersHooks, index}: {
-    order: OrderDetail,
+    order: OrderItemDetail,
     ordersHooks: OrdersHooksType,
     index: number
 }) {
@@ -120,7 +122,7 @@ function ItemOption({order, ordersHooks, index}: {
 }
 
 function ItemSum({order, ordersHooks, index}: {
-    order: OrderDetail,
+    order: OrderItemDetail,
     ordersHooks: OrdersHooksType,
     index: number
 }) {

@@ -2,23 +2,20 @@
 import OrderList from "@/app/display/register/[clientId]/orderList/OrderList";
 import {useRegiDisplaySockets} from "@/app/hooks/useRegiDisplaySockets";
 import {useEffect, useState} from "react";
-import {OrderDetail} from "@/app/Types/itemTypes";
+import {OrderItemDetail} from "@/app/Types/itemTypes";
 import {RegiDisplaySockets} from "@/app/display/register/[clientId]/RegiDisplaySockets";
 
 export function ContentWrapper({apiUrl, clientId}: {
     apiUrl: string,
     clientId: number
 }) {
-    const [currentOrders, setCurrentOrders] = useState<OrderDetail[]>([])
+    const [currentOrders, setCurrentOrders] = useState<OrderItemDetail[]>([])
 
 
     return (
         <>
-            {/*<p style={{margin: 0, textAlign: "right", fontSize: "0.8rem"}}>ID: {webHooks.clientId}</p>*/}
-            {/*<div className={RegisterDisplays.container}>*/}
             <OrderList currentOrders={currentOrders}/>
             <RegiDisplaySockets apiUrl={apiUrl} clientId={clientId} setCurrentOrders={setCurrentOrders} />
-            {/*</div>*/}
         </>
     )
 }

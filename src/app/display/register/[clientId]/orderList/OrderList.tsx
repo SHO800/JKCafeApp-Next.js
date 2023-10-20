@@ -3,11 +3,11 @@ import RegisterDisplays from "@/app/display/register/[clientId]/css/registerDisp
 import Orders from "@/app/display/register/[clientId]/orderList/Orders";
 import OrderListIndex from "@/app/register/OrderLists/OrderListIndex";
 import {useEffect, useState} from "react";
-import {OrderDetail} from "@/app/Types/itemTypes";
+import {OrderItemDetail} from "@/app/Types/itemTypes";
 import OrderLists from "@/app/register/css/orderList.module.css";
 import OrderSum from "@/app/components/OrderSum";
 
-export default function OrderList({currentOrders}: { currentOrders: OrderDetail[] }) {
+export default function OrderList({currentOrders}: { currentOrders: OrderItemDetail[] }) {
     // 全注文の合計値段を計算
     const [sum, setSum] = useState(0);
     useEffect(() => {

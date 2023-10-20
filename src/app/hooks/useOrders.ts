@@ -1,10 +1,10 @@
 import React, {FormEvent, useCallback, useEffect, useState} from "react";
-import {MenuData, OrderData, OrderDetail, ToppingData} from "@/app/Types/itemTypes";
+import {MenuData, OrderData, OrderItemDetail, ToppingData} from "@/app/Types/itemTypes";
 import {WebHooksType} from "@/app/hooks/useSocket";
 
-export const useOrders = (menus: MenuData, sendOrderData: (orderDetails: OrderDetail[]) => void, submit: (orderDetails: OrderDetail[]) => void): OrdersHooksType => {
+export const useOrders = (menus: MenuData, sendOrderData: (orderDetails: OrderItemDetail[]) => void, submit: (orderDetails: OrderItemDetail[]) => void): OrdersHooksType => {
     console.log()
-    const [currentOrders, setCurrentOrders] = useState<OrderDetail[]>([])
+    const [currentOrders, setCurrentOrders] = useState<OrderItemDetail[]>([])
 
     useEffect(() => {
         sendOrderData(currentOrders)
@@ -21,7 +21,7 @@ export const useOrders = (menus: MenuData, sendOrderData: (orderDetails: OrderDe
                 quantity: 1,
                 topping: null
             }
-            const addData: OrderDetail = convertToOrderDetail(menus, defaultData);
+            const addData: OrderItemDetail = convertToOrderDetail(menus, defaultData);
             return [addData, ...prevState]; // もし上へと追加にしたければこれを逆に
         })
 
@@ -34,7 +34,7 @@ export const useOrders = (menus: MenuData, sendOrderData: (orderDetails: OrderDe
         setCurrentOrders((prevState) => {
             const rvIndex = parseInt(button.value);
             const index = prevState.length - rvIndex - 1
-            const newData: OrderDetail[] = arrayDeepCopy(prevState);
+            const newData: OrderItemDetail[] = arrayDeepCopy(prevState);
             const modifyData: OrderData = newData[index];
             // console.log(rvIndex)
 
@@ -61,7 +61,7 @@ export const useOrders = (menus: MenuData, sendOrderData: (orderDetails: OrderDe
             const itemBaseIndex = prevState.length - itemBaseRvIndex - 1;
             const itemOptionName = button.value.slice(splitPosition + 1);
 
-            const newData: OrderDetail[] = arrayDeepCopy(prevState);
+            const newData: OrderItemDetail[] = arrayDeepCopy(prevState);
             const modifyData: OrderData = newData[itemBaseIndex];
             const modifyToppingsData = modifyData.topping
 
@@ -91,7 +91,7 @@ export const useOrders = (menus: MenuData, sendOrderData: (orderDetails: OrderDe
     }
 }
 export type OrdersHooksType = {
-    currentOrders: OrderDetail[],
+    currentOrders: OrderItemDetail[],
     handleAddOrder: (e: FormEvent<HTMLFormElement>) => void
     handleChangeBaseQuantity: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, quantity: number) => void
     handleChangeOptionQuantity: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, quantity: number) => void
@@ -105,8 +105,8 @@ function arrayDeepCopy<T>(array: T[]): T[] {
     });
 }
 
-function convertToOrderDetail(menuData: MenuData, orderData: OrderData): OrderDetail {
-    const orderDetail: OrderDetail = {
+function convertToOrderDetail(menuData: MenuData, orderData: OrderData): OrderItemDetail {
+    const orderDetail: OrderItemDetail = {
         id: orderData.id,
         menu_name: menuData[orderData.id].menu_name,
         short_name: menuData[orderData.id].short_name,
@@ -149,7 +149,7 @@ function convertToOrderDetail(menuData: MenuData, orderData: OrderData): OrderDe
 }
 
 
-function convertToOrderData(input: OrderDetail | OrderDetail[]): OrderData[] {
+function convertToOrderData(input: OrderItemDetail | OrderItemDetail[]): OrderData[] {
     function convertToppingData(topping: ToppingData | undefined | null): { [name: string]: { quantity: number, couponAmount: number } } | null {
         if (topping === null || topping === undefined) {
             return null;

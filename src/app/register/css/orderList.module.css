@@ -67,7 +67,7 @@
     -webkit-appearance: none;
     margin: 0;
 }
-.item form div button[disabled]{ /*すなわち何かの表示用のボタン*/
+.item form div button[disabled]:not(.quantityButton) { /*すなわち何かの表示用のボタン*/
     width: 100%;
     color: black;
     text-align: left;
@@ -87,6 +87,7 @@
 
          &.plus {
              border-color: rgba(255, 0, 0, 0.3);
+
          }
          &.minus{
              border-color: rgba(0, 0, 255, 0.3);

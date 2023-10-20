@@ -15,7 +15,7 @@ export type MenuData = {
 
 // apiとかで少しでも非同期の付加を軽減するために使用 (これ要る?())
 // 結局いらんかった
-// 改修コスト馬鹿にならない きれそう
+// 改修コスト馬鹿にならなそう きれそう
 export type OrderData = {
     id: number
     quantity: number
@@ -27,7 +27,7 @@ export type OrderData = {
     }
 }
 
-export type OrderDetail = {
+export type OrderItemDetail = {
     id: number
     menu_name: string
     short_name: string
@@ -44,4 +44,14 @@ export type ToppingData = {
         quantity: number
         couponAmount: number
     }
+}
+
+export type KitchenOrder = {
+    uuid: string
+    orderedAt: string
+    items: KitchenOrderItem[]
+}
+
+export type KitchenOrderItem = {
+
 }

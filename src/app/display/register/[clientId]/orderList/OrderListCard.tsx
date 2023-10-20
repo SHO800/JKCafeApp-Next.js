@@ -1,9 +1,9 @@
 "use client"
 import RegisterDisplays from "@/app/display/register/[clientId]/css/registerDisplay.module.css"
-import {OrderDetail} from "@/app/Types/itemTypes";
+import {OrderItemDetail} from "@/app/Types/itemTypes";
 
 export default function OrderListCard({order, index}: {
-    order: OrderDetail,
+    order: OrderItemDetail,
     index: number
 }) {
 
@@ -19,7 +19,7 @@ export default function OrderListCard({order, index}: {
 }
 
 function ItemBase({order, index}: {
-    order: OrderDetail,
+    order: OrderItemDetail,
     index: number
 }) {
     const sum = order.quantity * order.value
@@ -41,7 +41,7 @@ function ItemBase({order, index}: {
 }
 
 function ItemOption({order, index}: {
-    order: OrderDetail,
+    order: OrderItemDetail,
     index: number
 }) {
     return (
@@ -88,7 +88,7 @@ function ItemOption({order, index}: {
 }
 
 function ItemSum({order, index}: {
-    order: OrderDetail,
+    order: OrderItemDetail,
     index: number
 }) {
     return (
