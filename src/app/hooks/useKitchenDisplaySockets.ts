@@ -1,20 +1,25 @@
 import {useSocket} from "@/app/hooks/useSocket";
-import {Dispatch, SetStateAction, useMemo, useState} from "react";
-import {KitchenOrder, OrderItemDetail} from "@/app/Types/itemTypes";
+import {Dispatch, MouseEvent, SetStateAction, useEffect, useMemo} from "react";
+import {KitchenOrder} from "@/app/Types/itemTypes";
 
-export const useKitchenDisplaySockets = (apiUrl: string, setKitchenOrders: Dispatch<SetStateAction<KitchenOrder[]>>): KitchenDisplayHooksType => {
+export const useKitchenDisplaySockets = (apiUrl: string, setKitchenOrders: Dispatch<SetStateAction<KitchenOrder[]>>, setHandleSubmit: Dispatch<SetStateAction<(e: MouseEvent<HTMLButtonElement>) => void>>): KitchenDisplayHooksType => {
     const nameSpace = useMemo(() => "display/kitchen", [])
-    console.log("useKitchenDisplay")
-    useSocket(apiUrl, nameSpace, (socket) => {
+    const {socket} = useSocket(apiUrl, nameSpace, (socket) => {
         socket.on("kitchen_order_data", (msg) => {
             setKitchenOrders(msg);
         })
     });
 
-    return {
-    }
+    useEffect(() => {
+            setHandleSubmit(() => (e: MouseEvent<HTMLButtonElement>) => {
+                if (!e) return;
+                e.preventDefault();
+                console.log("kitchen_order_provided", e.currentTarget.value);
+                socket.emit("kitchen_order_provided", e.currentTarget.value);
+            })
+        }, [socket, setHandleSubmit])
+
+    return {}
 }
 
-export type KitchenDisplayHooksType = {
-
-}
+export type KitchenDisplayHooksType = {}

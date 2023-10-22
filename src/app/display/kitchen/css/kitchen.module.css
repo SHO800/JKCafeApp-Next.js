@@ -1,0 +1,25 @@
+.contentWrapper {
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    color: white;
+    overflow-y: scroll;
+}
+
+.info {
+    position: fixed;
+    width: 100%;
+    display: flex;
+    background: black;
+    justify-content: space-between;
+}
+.info p {
+    font-size: 2rem;
+}
+
+.orders {
+    display: flex;
+    flex-direction: row;
+    padding: 2rem 0 0;
+    flex-wrap: wrap;
+}

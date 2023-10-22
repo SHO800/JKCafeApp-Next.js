@@ -53,5 +53,15 @@ export type KitchenOrder = {
 }
 
 export type KitchenOrderItem = {
+    uuid: string
+    menu_id: number
+    menu_name: string
+    quantity: number
+    option: KitchenOrderItemOption[]
+}
 
+export type KitchenOrderItemOption = {
+    uuid: string
+    option_name: string
+    quantity: number
 }
