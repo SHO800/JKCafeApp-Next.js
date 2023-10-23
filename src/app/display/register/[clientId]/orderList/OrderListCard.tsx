@@ -54,6 +54,8 @@ function ItemOption({order, index}: {
                 // const couponAmount = topping[name].couponAmount;
                 const sum = value * quantity
 
+                if (quantity === 0) return;
+
                 return (
                     <div key={order.id * 100 + toppingIndex + name} className={RegisterDisplays.toppings}>
                         <div style={{width: "5%"}}></div>

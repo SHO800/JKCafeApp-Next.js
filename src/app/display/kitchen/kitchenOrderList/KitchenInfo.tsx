@@ -1,3 +1,4 @@
+"use client"
 import Kitchens from "@/app/display/kitchen/css/kitchen.module.css";
 import {NowTime} from "@/app/display/kitchen/kitchenOrderList/NowTime";
 

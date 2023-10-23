@@ -1,13 +1,15 @@
+"use client"
 import {useEffect, useState} from "react";
 
 // 現在時刻を返すコンポーネント
 
 export function NowTime() {
-    const [nowTime, setNowTime] = useState<Date>(new Date());
+    const [nowTime, setNowTime] = useState<{hour: number, minute: number, second: number}>({hour: 0, minute: 0, second: 0});
 
     useEffect(() => {
         const timer = setInterval(() => {
-            setNowTime(new Date());
+            const date = new Date();
+            setNowTime({hour: date.getHours(), minute: date.getMinutes(), second: date.getSeconds()});
         }, 1000);
 
         return () => {
@@ -16,6 +18,6 @@ export function NowTime() {
     }, []);
 
     return (
-        <p>現在時刻: {nowTime.getHours()}時{nowTime.getMinutes()}分{nowTime.getSeconds()}秒</p>
+        <p>現在時刻: {nowTime.hour}時{nowTime.minute}分{nowTime.second}秒</p>
     )
 }
