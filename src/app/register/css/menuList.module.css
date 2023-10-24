@@ -1,6 +1,6 @@
 .spacer  {
     height: 100%;
-    font-size: 0.95rem;
+    font-size: 1.3rem;
     border-collapse: collapse;
     max-height: 100%;
 
@@ -18,7 +18,7 @@
 /* 左側のリスト */
 .item{
     border-bottom: solid 20px #e3f6fc;
-    padding: 10px 20px;
+    padding: 30px 20px;
     position: relative;
 }
 .item form{

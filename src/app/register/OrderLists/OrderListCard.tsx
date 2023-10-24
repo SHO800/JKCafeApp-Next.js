@@ -93,19 +93,26 @@ function ItemOption({order, ordersHooks, index}: {
 
                         </div>
                         <div style={{width: "15%"}}>
-                            <button value={`${index}:${name}`} type="button"
-                                onClick={e => ordersHooks.handleChangeOptionQuantity(e, -1)}
-                                className={`${Registers.input_border} ${OrderLists.quantityButton} ${OrderLists.minus}`}>-
-                            </button>
+                            {quantity != 0 ?
+                                    <button value={`${index}:${name}`} type="button"
+                                        onClick={e => ordersHooks.handleChangeOptionQuantity(e, -1)}
+                                        className={`${Registers.input_border} ${OrderLists.quantityButton} ${OrderLists.minus}`}
+                                    >-
+                                    </button>
+                                : <></>
+                            }
                         </div>
                         <div style={{width: "5%"}}>
                             <input name="quantity" value={quantity} type="number" readOnly></input>
                         </div>
                         <div style={{width: "15%"}}>
-                            <button value={`${index}:${name}`} type="button"
-                                onClick={e => ordersHooks.handleChangeOptionQuantity(e, 1)}
-                                className={`${Registers.input_border} ${OrderLists.quantityButton} ${OrderLists.plus}`}>+
-                            </button>
+                            {quantity == 0 ?
+                                <button value={`${index}:${name}`} type="button"
+                                    onClick={e => ordersHooks.handleChangeOptionQuantity(e, 1)}
+                                    className={`${Registers.input_border} ${OrderLists.quantityButton} ${OrderLists.plus}`}>+
+                                </button>
+                                : <></>
+                            }
                         </div>
                         <div style={{width: "2.5%"}}>
 

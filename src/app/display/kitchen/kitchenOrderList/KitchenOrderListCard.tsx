@@ -30,7 +30,7 @@ export function OrderItem({name, amount, toppings}: { name: string, amount: numb
                 {toppings.map((topping, index) => {
                     return (
                         <div key={index} className={Cards.topping}>
-                            <p className={Cards.amount}>{topping.quantity}</p>
+                            {/*<p className={Cards.amount}>{topping.quantity}</p>*/}
                             <p className={Cards.name}>{topping.option_name}</p>
                         </div>
                     )}
@@ -41,7 +41,7 @@ export function OrderItem({name, amount, toppings}: { name: string, amount: numb
     return (
         <div className={Cards.orderItem}>
             <div className={Cards.base}>
-                <p className={Cards.amount}>{amount}</p>
+                {/*<p className={Cards.amount}>{amount}</p>*/}
                 <p className={Cards.name}>{name}</p>
             </div>
             {toppingsList}
