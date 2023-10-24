@@ -19,6 +19,7 @@ export const useOrders = (menus: MenuData, sendOrderData: (orderDetails: OrderIt
             const defaultData: OrderData = {
                 id: id,
                 quantity: 1,
+                coupon: null,
                 topping: null
             }
             const addData: OrderItemDetail = convertToOrderDetail(menus, defaultData);
@@ -77,6 +78,29 @@ export const useOrders = (menus: MenuData, sendOrderData: (orderDetails: OrderIt
         })
     }, [menus])
 
+    const handleChangeOptionCoupon = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>, type: "cake" | "topping", couponAmount: number) => {
+        const button = e.currentTarget as HTMLButtonElement;
+
+        setCurrentOrders((prevState) => {
+            const rvIndex = parseInt(button.value);
+            const index = prevState.length - rvIndex - 1
+            const newData: OrderItemDetail[] = arrayDeepCopy(prevState);
+            const modifyData = newData[index];
+            const modifyCouponData = modifyData.coupon;
+            if (!modifyCouponData) return prevState;
+            const modifyCouponCategoryData = modifyCouponData[type];
+
+
+            if (couponAmount == 0) modifyCouponCategoryData.quantity = 0;
+            else modifyCouponCategoryData.quantity += couponAmount;
+
+            newData[index] = convertToOrderDetail(menus, modifyData);
+
+            return newData;
+        })
+
+    }, [menus])
+
     const submitCheckout = useCallback(() => {
         submit(currentOrders)
         setCurrentOrders([])
@@ -113,6 +137,7 @@ function convertToOrderDetail(menuData: MenuData, orderData: OrderData): OrderIt
         text: menuData[orderData.id].text,
         value: menuData[orderData.id].value,
         quantity: orderData.quantity,
+        coupon: null,
         topping: null,
         sum: -1,
     }
@@ -128,21 +153,45 @@ function convertToOrderDetail(menuData: MenuData, orderData: OrderData): OrderIt
             const orderToppingData = orderData.topping// 商品情報の方からトッピングデータ(値段のやつ)取り出して
             // 追加していく
             const quantity = orderToppingData ? orderToppingData[toppingName].quantity : 0;
-            const couponAmount = orderToppingData ? orderToppingData[toppingName].couponAmount : 0;
+            // const couponAmount = orderToppingData ? orderToppingData[toppingName].couponAmount : 0;
             const value = menuToppingData[toppingName]["value"];
 
             topping = {
                 ...topping,
                 [toppingName]: {
                     quantity: quantity,
-                    couponAmount: couponAmount,
+                    // couponAmount: couponAmount,
                     value: value,
                 }
             }
             // トッピングの値段をsumに反映
-            orderDetail.sum += (quantity - couponAmount) * value * orderDetail.quantity;
+            orderDetail.sum += (quantity) * value * orderDetail.quantity;
         })
         if (Object.keys(topping).length > 0) orderDetail["topping"] = topping
+
+        const menuCouponData = menuData[orderData.id].coupon
+        if (menuCouponData) {
+            let coupon: { [name: string]: { quantity: number, value: number} } = {};
+            Object.keys(menuCouponData).map((couponName) => {
+                const orderCouponData = orderData.topping// 商品情報の方からクーポンデータ取り出して
+                // 追加していく
+                const quantity = orderCouponData ? orderCouponData[couponName].quantity : 0;
+                const value = menuCouponData[couponName]["value"] ;
+
+
+                coupon = {
+                    ...coupon,
+                    [couponName]: {
+                        quantity: quantity,
+                        value: value,
+                    }
+                }
+                // クーポンの値段をsumに反映
+                orderDetail.sum -= quantity * value * orderDetail.quantity;
+            })
+
+            if (Object.keys(coupon).length > 0) orderDetail["coupon"] = coupon
+        }
     }
 
     return orderDetail;
@@ -150,19 +199,19 @@ function convertToOrderDetail(menuData: MenuData, orderData: OrderData): OrderIt
 
 
 function convertToOrderData(input: OrderItemDetail | OrderItemDetail[]): OrderData[] {
-    function convertToppingData(topping: ToppingData | undefined | null): { [name: string]: { quantity: number, couponAmount: number } } | null {
+    function convertToppingData(topping: ToppingData | undefined | null): { [name: string]: { quantity: number} } | null {
         if (topping === null || topping === undefined) {
             return null;
         }
 
-        const toppingData: { [name: string]: { quantity: number, couponAmount: number } } = {};
+        const toppingData: { [name: string]: { quantity: number}} = {};
         Object.keys(topping).forEach((toppingName) => {
             const quantity = topping[toppingName].quantity;
-            const couponAmount = topping[toppingName].couponAmount;
+            // const couponAmount = topping[toppingName].couponAmount;
 
             toppingData[toppingName] = {
                 quantity,
-                couponAmount,
+                // couponAmount,
             };
         })
 
@@ -174,6 +223,7 @@ function convertToOrderData(input: OrderItemDetail | OrderItemDetail[]): OrderDa
         return input.map((orderDetail) => ({
             id: orderDetail.id,
             quantity: orderDetail.quantity,
+            coupon: orderDetail.coupon,
             topping: convertToppingData(orderDetail.topping),
         }));
     } else {
@@ -181,6 +231,7 @@ function convertToOrderData(input: OrderItemDetail | OrderItemDetail[]): OrderDa
         return [{
             id: input.id,
             quantity: input.quantity,
+            coupon: input.coupon,
             topping: convertToppingData(input.topping),
         }];
     }

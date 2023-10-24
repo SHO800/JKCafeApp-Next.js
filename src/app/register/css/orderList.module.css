@@ -80,7 +80,7 @@
 }
 .list .item_base {
     font-size: 1.1rem;
-    margin: 0.5rem 0 1rem;
+    margin: 0.5rem 0;
      .quantityButton {
             font-size: 2rem;
             line-height: 0;
@@ -97,17 +97,32 @@
 }
 .list .option {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 3px;
-    /*box-sizing: border-box;*/
-    padding-top: 0.25rem;
-    margin-bottom: 0.5rem;
+    margin: 0.3rem 0 0;
+    padding: 0.3rem 0;
+    justify-content: space-around;
+    border-top: rgb(128, 128, 128) 1px solid;
+    /*border-bottom: rgb(128, 128, 128) 1px solid;*/
+
 }
 .list .option .toppings {
-    padding: 0.25rem 0;
-    height: 50%;
-    border-top: black 1px dotted;
-    /*background: gray;*/
+    margin: 0.5rem 0;
+    width: 10rem;
+    height: 2rem;
+    padding: 0;
+    position: relative;
+
+}
+.optionButton {
+    display: block;
+    position: absolute;
+    width: 10rem;
+    height: 2rem;
+    left: 0;
+    top: 0;
+    border: white 2px solid;
+    border-radius: 5px;
 }
 .list .sum{
     /*margin: 1rem 0 0.5rem;*/

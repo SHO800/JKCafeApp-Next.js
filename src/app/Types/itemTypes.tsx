@@ -4,6 +4,12 @@ export type MenuData = {
         short_name: string
         text: string
         value: number
+        coupon: null | {
+            [name: string]: {
+                quantity: number
+                value: number
+            }
+        }
         topping: null | {
             [name: string]: {
                 // プロパティ追加するかもなのでオブジェクトにしてる
@@ -19,10 +25,16 @@ export type MenuData = {
 export type OrderData = {
     id: number
     quantity: number
+    coupon: null | {
+        [name: string]: {
+            quantity: number
+            value: number
+        }
+    }
     topping: null | {
         [name: string]: {
             quantity: number
-            couponAmount: number
+            // couponAmount: number
         }
     }
 }
@@ -34,6 +46,12 @@ export type OrderItemDetail = {
     text: string
     value: number
     quantity: number
+    coupon: null | {
+        [name: string]: {
+            quantity: number
+            value: number
+        }
+    }
     topping: null | ToppingData
     sum: number
 }
@@ -42,7 +60,7 @@ export type ToppingData = {
     [name: string]: {
         value: number
         quantity: number
-        couponAmount: number
+        // couponAmount: number
     }
 }
 

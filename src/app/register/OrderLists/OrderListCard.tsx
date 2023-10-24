@@ -15,7 +15,7 @@ export default function OrderListCard({order, ordersHooks, index}: {
             <form className={OrderLists.list}>
                 <ItemBase order={order} ordersHooks={ordersHooks} index={index}/>
                 <ItemOption order={order} ordersHooks={ordersHooks} index={index}/>
-                <ItemSum order={order} ordersHooks={ordersHooks} index={index}/>
+                {/*<ItemSum order={order} ordersHooks={ordersHooks} index={index}/>*/}
             </form>
         </div>
     )
@@ -26,38 +26,55 @@ function ItemBase({order, ordersHooks, index}: {
     ordersHooks: OrdersHooksType,
     index: number
 }) {
-    const sum = order.quantity * order.value
+    // const sum = order.quantity * order.value
     return (
         <div className={OrderLists.item_base}>
-            <div style={{width: "40%"}}>
+            <div style={{width: "20%"}}>
                 <button name="name" value={order.menu_name} disabled>{order.menu_name}</button>
             </div>
-            <div style={{width: "10%"}}>
-                <input name="value" value={order.value} type="number" readOnly></input>
+            <div style={{width: "5%"}}>
             </div>
-            <div style={{width: "2.5%"}}>
+            <div style={{width: "10%"}}>
+                    { order.coupon ?
+                        /*ホットケーキ無料*/
+                        order.coupon.cake.quantity == 0 ?
+                            <button value={index} type="button"
+                                onClick={e => ordersHooks.handleChangeOptionQuantity(e, -1)}
+                                style={{
+                                    borderStyle: "solid",
+                                    borderColor: "gray",
+                                    color: "red",
+                                }}
+                                className={`${OrderLists.optionButton}`}
+                            >{name}
+                            </button>
+                            :
+                            <button value={index} type="button"
+                                onClick={e => ordersHooks.handleChangeOptionQuantity(e, 1)}
+                                style={{
+                                    borderStyle: "dotted",
+                                    borderColor: "gray",
+                                }}
+                                className={`${OrderLists.optionButton}`}
+                            >{name}
+                            </button>
+                        : <></>
+                    }
+            </div>
+            <div style={{width: "10%"}}>
+            </div>
+            <div style={{width: "20%"}}>
+            </div>
+            <div style={{width: "10%"}}>
 
             </div>
             <div style={{width: "15%"}}>
-                <button value={index} type="button" onClick={e => ordersHooks.handleChangeBaseQuantity(e, -1)}
-                    className={`${Registers.input_border} ${OrderLists.quantityButton} ${OrderLists.minus}`}>-
-                </button>
+                <input name="sum" value={order.sum} style={{fontSize: "1.7rem"}} type="number" readOnly></input>
             </div>
             <div style={{width: "5%"}}>
-                <input name="quantity" value={order.quantity} type="number" readOnly></input>
-            </div>
-            <div style={{width: "15%"}}>
-                <button value={index} type="button" onClick={e => ordersHooks.handleChangeBaseQuantity(e, 1) }
-                    className={`${Registers.input_border} ${OrderLists.quantityButton} ${OrderLists.plus}`}>+
+                <button value={index} type="button" onClick={e => ordersHooks.handleChangeBaseQuantity(e, 0)}
+                    className={Registers.input_border}>削除
                 </button>
-
-                {/*disabled={order.quantity == 1}*/}
-            </div>
-            <div style={{width: "2.5%"}}>
-
-            </div>
-            <div style={{width: "10%"}}>
-                <input name="sum" value={sum} type="number" readOnly></input>
             </div>
         </div>
     )
@@ -80,47 +97,32 @@ function ItemOption({order, ordersHooks, index}: {
 
                 return (
                     <div key={order.id * 100 + toppingIndex + name} className={OrderLists.toppings}>
-                        <div style={{width: "5%"}}></div>
-                        <div style={{width: "25%"}}>
-                            <button name="name" value={name} disabled>{name}</button>
-                            {/*valueが表示内容になるinput要素を使いたかったが改行ができないのでこれだけbutton*/}
-                        </div>
-                        <div style={{width: "10%"}}></div>
-                        <div style={{width: "10%"}}>
-                            <input name="value" value={value} type="number" readOnly></input>
-                        </div>
-                        <div style={{width: "2.5%"}}>
+                        {quantity != 0 ?
+                            <button value={`${index}:${name}`} type="button"
+                                onClick={e => ordersHooks.handleChangeOptionQuantity(e, -1)}
+                                style={{
+                                    // borderStyle: "solid",
+                                    // borderWidth: "4px",
+                                    // borderColor: "orangered",
+                                    borderStyle: "solid",
+                                    borderColor: "gray",
+                                    color: "red",
+                                }}
+                                className={`${OrderLists.optionButton}`}
+                            >{name}
+                            </button>
+                            :
+                            <button value={`${index}:${name}`} type="button"
+                                onClick={e => ordersHooks.handleChangeOptionQuantity(e, 1)}
+                                style={{
+                                    borderStyle: "dotted",
+                                    borderColor: "gray",
+                                }}
+                                className={`${OrderLists.optionButton}`}
+                            >{name}
+                            </button>
+                        }
 
-                        </div>
-                        <div style={{width: "15%"}}>
-                            {quantity != 0 ?
-                                    <button value={`${index}:${name}`} type="button"
-                                        onClick={e => ordersHooks.handleChangeOptionQuantity(e, -1)}
-                                        className={`${Registers.input_border} ${OrderLists.quantityButton} ${OrderLists.minus}`}
-                                    >-
-                                    </button>
-                                : <></>
-                            }
-                        </div>
-                        <div style={{width: "5%"}}>
-                            <input name="quantity" value={quantity} type="number" readOnly></input>
-                        </div>
-                        <div style={{width: "15%"}}>
-                            {quantity == 0 ?
-                                <button value={`${index}:${name}`} type="button"
-                                    onClick={e => ordersHooks.handleChangeOptionQuantity(e, 1)}
-                                    className={`${Registers.input_border} ${OrderLists.quantityButton} ${OrderLists.plus}`}>+
-                                </button>
-                                : <></>
-                            }
-                        </div>
-                        <div style={{width: "2.5%"}}>
-
-                        </div>
-                        <div style={{width: "10%"}}>
-                            <input name="sum" value={sum} type="number" readOnly></input>
-                        </div>
-                        {/*<div style={{width:"10%"}}><button value={ order.id }  type="submit" className={Registers.input_border}>-</button></div>*/}
                     </div>
                 )
             })}
