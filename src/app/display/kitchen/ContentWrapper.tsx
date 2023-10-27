@@ -6,7 +6,7 @@ import {KitchenOrderList} from "@/app/display/kitchen/kitchenOrderList/KitchenOr
 
 export function ContentWrapper({apiUrl}: {apiUrl: string,}){
     const [kitchenOrders, setKitchenOrders] = useState<KitchenOrder[]>([]);
-    const [handleSubmit, setHandleSubmit] = useState<(e: MouseEvent<HTMLButtonElement>) => void>(() => {});
+    const [handleSubmit, setHandleSubmit] = useState<(uuid: string) => void>(() => {});
     return (
         <>
             <KitchenOrderList kitchenOrders={kitchenOrders} handleSubmit={handleSubmit}/>

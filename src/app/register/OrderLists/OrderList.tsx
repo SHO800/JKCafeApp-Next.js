@@ -6,7 +6,7 @@ import Orders from "@/app/register/OrderLists/Orders";
 import OrderListIndex from "@/app/register/OrderLists/OrderListIndex";
 import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import OrderSum from "@/app/components/OrderSum";
-import {ConfirmPanel} from "@/app/register/OrderLists/ConfirmPanel";
+import {ConfirmPanel} from "@/app/components/ConfirmPanel";
 
 
 export default function OrderList({ordersHooks}: { ordersHooks: OrdersHooksType }) {
@@ -38,7 +38,10 @@ export default function OrderList({ordersHooks}: { ordersHooks: OrdersHooksType 
                 <div className={OrderLists.checkout}>
                     <OrderSum sum={sum} fontSize={"2rem"}/>
                     <CheckoutButton setStatus={setConfirmPanelStatus}/>
-                    <ConfirmPanel ordersHooks={ordersHooks} sum={sum} status={confirmPanelStatus} setStatus={setConfirmPanelStatus}/>
+                    <ConfirmPanel callback={ordersHooks.submitCheckout} status={confirmPanelStatus} setStatus={setConfirmPanelStatus}>
+                        <p>会計を確定しますか?</p>
+                        <p>※お支払いが完了してから押してください！</p>
+                    </ConfirmPanel>
                 </div>
             </div>
         </>

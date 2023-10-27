@@ -2,9 +2,11 @@ import {KitchenOrder, KitchenOrderItemOption} from "@/app/Types/itemTypes";
 import Cards from "@/app/display/kitchen/css/card.module.css";
 import {convertToDateObject} from "@/app/functions/convertToDateObject";
 import {OrderOverview} from "@/app/display/kitchen/kitchenOrderList/OrderOverview";
-import {MouseEvent} from "react";
+import React, {MouseEvent, useCallback, useState} from "react";
+import Registers from "@/app/register/css/register.module.css";
+import {ConfirmPanel} from "@/app/components/ConfirmPanel";
 
-export function KitchenOrderListCard({order, index, handleSubmit}: { order: KitchenOrder, index: number, handleSubmit: (e: MouseEvent<HTMLButtonElement>) => void}) {
+export function KitchenOrderListCard({order, index, handleSubmit}: { order: KitchenOrder, index: number, handleSubmit: (uuid: string) => void}) {
     const orderedDate = convertToDateObject(order.orderedAt);
 
     return (
@@ -17,8 +19,25 @@ export function KitchenOrderListCard({order, index, handleSubmit}: { order: Kitc
                     )
                 })}
             </div>
-            <button type={"button"} className={Cards.orderCompleteButton} value={order.uuid} onClick={(e) => handleSubmit(e)}></button>
+            <ProvidedButton orderedAt={order.orderedAt} cardIndex={index} callback={() => handleSubmit(order.uuid)}  />
         </div>
+    )
+}
+
+function ProvidedButton({orderedAt, cardIndex, callback}: { orderedAt: string, cardIndex: number, callback: () => void}) {
+    const [status, setStatus] = useState(false);
+    return (
+        <>
+            <button className={Cards.orderCompleteButton} onClick={() => setStatus(true)}></button>
+            <ConfirmPanel  status={status} setStatus={setStatus} callback={callback}>
+                <p>次の注文を提供して完了しますか?</p>
+                <br></br>
+                <p>インデックス: {cardIndex}</p>
+                <p>注文日時: {orderedAt}</p>
+                <br></br>
+                <p>※提供後は未提供状態に戻せません！</p>
+            </ConfirmPanel>
+        </>
     )
 }
 

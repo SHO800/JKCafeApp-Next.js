@@ -6,7 +6,7 @@ import {useKitchenDisplaySockets} from "@/app/hooks/useKitchenDisplaySockets";
 export const KitchenDisplaySockets = memo(({apiUrl, setKitchenOrders, setHandleSubmit}: {
     apiUrl: string,
     setKitchenOrders: Dispatch<SetStateAction<KitchenOrder[]>>,
-    setHandleSubmit: Dispatch<SetStateAction<(e: MouseEvent<HTMLButtonElement>) => void>>
+    setHandleSubmit: Dispatch<SetStateAction<(uuid: string) => void>>
 }) => {
     useKitchenDisplaySockets(apiUrl, setKitchenOrders, setHandleSubmit);
     return (<></>)

@@ -68,6 +68,7 @@ export type KitchenOrder = {
     orderedAt: string
     items: KitchenOrderItem[]
     sum: number
+    status: number
 }
 
 export type KitchenOrderItem = {
@@ -88,10 +89,8 @@ export type KitchenOrderItemOption = {
 }
 
 type KitchenOrderItemCoupon = null | {
-    [name: string]: {
-        uuid: string
-        coupon_name: string
-        quantity: number
-        value: number
-    }
+    uuid: string
+    coupon_name: string
+    quantity: number
+    value: number
 }

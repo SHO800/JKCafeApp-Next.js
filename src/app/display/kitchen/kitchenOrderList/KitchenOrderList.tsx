@@ -4,7 +4,7 @@ import {KitchenOrderListCard} from "@/app/display/kitchen/kitchenOrderList/Kitch
 import {KitchenInfo} from "@/app/display/kitchen/kitchenOrderList/KitchenInfo";
 import {MouseEvent} from "react";
 
-export function KitchenOrderList({kitchenOrders, handleSubmit}: { kitchenOrders: KitchenOrder[], handleSubmit: (e: MouseEvent<HTMLButtonElement>) => void }) {
+export function KitchenOrderList({kitchenOrders, handleSubmit}: { kitchenOrders: KitchenOrder[], handleSubmit: (uuid: string) => void }) {
     return (
         <>
             <KitchenInfo />

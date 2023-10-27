@@ -112,7 +112,7 @@
 .historyCardWrapper {
     overflow-y: scroll;
     height: 100vh;
-    padding-top: 2rem;
+    padding: 2rem 0 1rem 1rem;
 }
 
 .historyCard {
@@ -146,11 +146,12 @@
 .historyCardItemBase {
     display: flex;
     flex-direction: row;
+    margin-top: 1rem;
 }
 
 .historyCardItemOptions {
     width: 90%;
-    border-top: rgb(128, 128, 128) 1px solid;
+    border-top: rgb(128, 128, 128) 1px dotted;
     margin:  0 0 0 auto;
 
     gap: 0.3rem
