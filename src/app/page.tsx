@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import Test from './components/test'
 import Homes from './home.module.css'
 import BigTitle from "@/app/components/bigTItle/BigTitle";
 

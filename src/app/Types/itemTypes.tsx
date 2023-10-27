@@ -60,7 +60,6 @@ export type ToppingData = {
     [name: string]: {
         value: number
         quantity: number
-        // couponAmount: number
     }
 }
 
@@ -68,6 +67,7 @@ export type KitchenOrder = {
     uuid: string
     orderedAt: string
     items: KitchenOrderItem[]
+    sum: number
 }
 
 export type KitchenOrderItem = {
@@ -76,10 +76,22 @@ export type KitchenOrderItem = {
     menu_name: string
     quantity: number
     option: KitchenOrderItemOption[]
+    coupon: KitchenOrderItemCoupon[]
+    value: number
 }
 
 export type KitchenOrderItemOption = {
     uuid: string
     option_name: string
     quantity: number
+    value: number
+}
+
+type KitchenOrderItemCoupon = null | {
+    [name: string]: {
+        uuid: string
+        coupon_name: string
+        quantity: number
+        value: number
+    }
 }

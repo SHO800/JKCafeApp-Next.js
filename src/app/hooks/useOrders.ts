@@ -3,7 +3,6 @@ import {MenuData, OrderData, OrderItemDetail, ToppingData} from "@/app/Types/ite
 import {WebHooksType} from "@/app/hooks/useSocket";
 
 export const useOrders = (menus: MenuData, sendOrderData: (orderDetails: OrderItemDetail[]) => void, submit: (orderDetails: OrderItemDetail[]) => void): OrdersHooksType => {
-    console.log()
     const [currentOrders, setCurrentOrders] = useState<OrderItemDetail[]>([])
 
     useEffect(() => {

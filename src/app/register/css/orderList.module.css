@@ -31,7 +31,22 @@
 .item{
     border-bottom: solid 20px #e3f6fc;
     padding: 10px 20px;
+
+    animation-name: rendered;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-iteration-count: 1;
 }
+
+@keyframes rendered {
+    0% {
+        background-color: #8fd6ff;
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
 .item form{
     height: auto;
     display: flex;

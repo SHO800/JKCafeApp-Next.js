@@ -1,19 +1,23 @@
 import {useSocket} from "@/app/hooks/useSocket";
-import {useCallback, useMemo, useState} from "react";
+import {Dispatch, MutableRefObject, SetStateAction, useCallback, useMemo, useState} from "react";
 import {KitchenOrder, OrderItemDetail} from "@/app/Types/itemTypes";
 
-export const useRegiSockets = (apiUrl: string, clientId: number): RegiHooksType => {
+export const useRegiSockets = (apiUrl: string, clientId: number, setHistoryRef: MutableRefObject<Dispatch<SetStateAction<KitchenOrder[]>> | null>): RegiHooksType => {
     const nameSpace = useMemo(() => "register", [])
     const {socket} = useSocket(apiUrl, nameSpace, (socket) => {
         socket.on("history", (msg) => {
-            setHistory(msg);
+            if (!setHistoryRef.current) return
+            setHistoryRef.current(msg);
         })
     });
-    const [history, setHistory] = useState<KitchenOrder[]>([]);
 
     const sendOrderData = useCallback((orderDetails: OrderItemDetail[]) => {
         socket.emit("temp_order_data", {clientId: clientId, data: JSON.stringify(orderDetails)})
     }, [clientId, socket]);
+
+    const cancelOrder = useCallback((orderUuid: string) => {
+        socket.emit("cancel_order", {orderUuid: orderUuid})
+    }, [socket])
 
     const submit = useCallback(async (orders: OrderItemDetail[]) => {
         const namespace = "/checkout-submit"
@@ -23,20 +27,18 @@ export const useRegiSockets = (apiUrl: string, clientId: number): RegiHooksType 
             headers:{'Content-Type': 'application/json'},
             body: JSON.stringify(orders)
         };
-        console.log("submit")
         await fetch(apiUrl + namespace, requestOptions)
-            .then(res => res.json()).then(value => console.log(value))
     }, [apiUrl]);
 
     return {
         sendOrderData,
         submit,
-        history,
+        cancelOrder,
     }
 }
 
 export type RegiHooksType = {
     sendOrderData: (orderDetails: OrderItemDetail[]) => void,
     submit: (orderDetails: OrderItemDetail[]) => void,
-    history: KitchenOrder[],
+    cancelOrder: (orderUuid: string) => void,
 }
