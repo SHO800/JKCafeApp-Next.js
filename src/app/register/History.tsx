@@ -103,12 +103,10 @@ function CancelButton({orderedAt, sum, callback}: { orderedAt: string, sum: numb
         <>
             <button className={Registers.input_border} onClick={() => setStatus(true)}>取消</button>
             <ConfirmPanel status={status} setStatus={setStatus} callback={callback}>
-                <p>次の注文を取り消しますか?</p>
-                <br></br>
+                <p style={{fontSize: "1.1rem"}}>次の注文を取り消しますか?</p>
                 <p>注文日時: {orderedAt}</p>
                 <p>合計金額: {sum}円</p>
-                <br></br>
-                <p>※取消後は元に戻せません！ また提供済であってもキャンセル状態になります！</p>
+                <p style={{fontSize: "0.9rem"}}>※取消後は元に戻せません！ また提供済であってもキャンセル状態になります！</p>
             </ConfirmPanel>
         </>
     )
