@@ -78,23 +78,27 @@ export const useOrders = (menus: MenuData, sendOrderData: (orderDetails: OrderIt
         })
     }, [menus])
 
-    const handleChangeOptionCoupon = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>, type: "cake" | "topping", couponAmount: number) => {
+    const handleChangeCouponQuantity = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>, couponAmount: number) => {
         const button = e.currentTarget as HTMLButtonElement;
 
         setCurrentOrders((prevState) => {
-            const rvIndex = parseInt(button.value);
-            const index = prevState.length - rvIndex - 1
+            const splitPosition = button.value.indexOf(":");
+            const itemBaseRvIndex = parseInt(button.value.slice(0, splitPosition));
+            const itemBaseIndex = prevState.length - itemBaseRvIndex - 1;
+            const itemOptionName = button.value.slice(splitPosition + 1);
+
             const newData: OrderItemDetail[] = arrayDeepCopy(prevState);
-            const modifyData = newData[index];
+            const modifyData = newData[itemBaseIndex];
             const modifyCouponData = modifyData.coupon;
             if (!modifyCouponData) return prevState;
-            const modifyCouponCategoryData = modifyCouponData[type];
 
-
-            if (couponAmount == 0) modifyCouponCategoryData.quantity = 0;
-            else modifyCouponCategoryData.quantity += couponAmount;
-
-            newData[index] = convertToOrderDetail(menus, modifyData);
+            if (!(modifyCouponData && modifyCouponData[itemOptionName])) return prevState;
+            modifyCouponData[itemOptionName].quantity += couponAmount;
+            if (modifyCouponData[itemOptionName].quantity < 0) {
+                return prevState;
+            } else {
+                newData[itemBaseIndex] = convertToOrderDetail(menus, modifyData);
+            }
 
             return newData;
         })
@@ -111,6 +115,7 @@ export const useOrders = (menus: MenuData, sendOrderData: (orderDetails: OrderIt
         handleAddOrder,
         handleChangeBaseQuantity,
         handleChangeOptionQuantity,
+        handleChangeCouponQuantity,
         submitCheckout: submitCheckout,
     }
 }
@@ -119,6 +124,8 @@ export type OrdersHooksType = {
     handleAddOrder: (e: FormEvent<HTMLFormElement>) => void
     handleChangeBaseQuantity: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, quantity: number) => void
     handleChangeOptionQuantity: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, quantity: number) => void
+    handleChangeCouponQuantity: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, couponAmount: number) => void
+
     submitCheckout: () => void
 }
 
@@ -169,29 +176,29 @@ function convertToOrderDetail(menuData: MenuData, orderData: OrderData): OrderIt
         })
         if (Object.keys(topping).length > 0) orderDetail["topping"] = topping
 
-        const menuCouponData = menuData[orderData.id].coupon
-        if (menuCouponData) {
-            let coupon: { [name: string]: { quantity: number, value: number} } = {};
-            Object.keys(menuCouponData).map((couponName) => {
-                const orderCouponData = orderData.topping// 商品情報の方からクーポンデータ取り出して
-                // 追加していく
-                const quantity = orderCouponData ? orderCouponData[couponName].quantity : 0;
-                const value = menuCouponData[couponName]["value"] ;
+    }
+    const menuCouponData = menuData[orderData.id].coupon
+    if (menuCouponData) {
+        let coupon: { [name: string]: { quantity: number, value: number} } = {};
+        Object.keys(menuCouponData).map((couponName) => {
+            const orderCouponData = orderData.coupon// 商品情報の方からクーポンデータ取り出して
+            // 追加していく
+            const quantity = orderCouponData ? orderCouponData[couponName].quantity : 0;
+            const value = menuCouponData[couponName]["value"] ;
 
 
-                coupon = {
-                    ...coupon,
-                    [couponName]: {
-                        quantity: quantity,
-                        value: value,
-                    }
+            coupon = {
+                ...coupon,
+                [couponName]: {
+                    quantity: quantity,
+                    value: value,
                 }
-                // クーポンの値段をsumに反映
-                orderDetail.sum -= quantity * value * orderDetail.quantity;
-            })
+            }
+            // クーポンの値段をsumに反映
+            orderDetail.sum -= quantity * value * orderDetail.quantity;
+        })
 
-            if (Object.keys(coupon).length > 0) orderDetail["coupon"] = coupon
-        }
+        if (Object.keys(coupon).length > 0) orderDetail["coupon"] = coupon
     }
 
     return orderDetail;

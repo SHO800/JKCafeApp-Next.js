@@ -30,11 +30,11 @@ function ItemBase({order, index}: {
             </div>
             <div style={{width: "20%"}}></div>
             <div style={{width: "10%"}}>
-                <input name="quantity" value={order.quantity} type="number" readOnly></input>
+                {/*<input name="quantity" value={order.quantity} type="number" readOnly></input>*/}
             </div>
             <div style={{width: "5%"}}></div>
-            <div style={{width: "10%"}}>
-                <input name="sum" value={sum} type="number" readOnly></input>
+            <div style={{width: "10%", display: "flex", alignItems: "center"}}>
+                ¥<input name="sum" value={sum} type="number" readOnly></input>
             </div>
         </div>
     )
@@ -44,6 +44,7 @@ function ItemOption({order, index}: {
     order: OrderItemDetail,
     index: number
 }) {
+    if (!order.topping) return null
     return (
         <div className={RegisterDisplays.option}>
             {order.topping && Object.keys(order.topping).map((name, toppingIndex) => {
@@ -59,28 +60,16 @@ function ItemOption({order, index}: {
                 return (
                     <div key={order.id * 100 + toppingIndex + name} className={RegisterDisplays.toppings}>
                         <div style={{width: "5%"}}></div>
-                        <div style={{width: "25%"}}>
-                            <button name="name" value={name} disabled>{name}</button>
+                        <div style={{width: "80%"}}>
+                            <button name="name" value={name} disabled>+ {name}</button>
                         </div>
-                        <div style={{width: "10%"}}></div>
-                        <div style={{width: "10%"}}>
-                        </div>
-                        <div style={{width: "2.5%"}}>
 
-                        </div>
-                        <div style={{width: "15%"}}>
-                        </div>
                         <div style={{width: "5%"}}>
-                            <input name="quantity" value={quantity} type="number" readOnly></input>
                         </div>
-                        <div style={{width: "15%"}}>
+                        <div style={{width: "10%", display: "flex", alignItems: "center"}}>
+                            ¥<input name="sum" value={sum} type="number" readOnly></input>
                         </div>
-                        <div style={{width: "2.5%"}}>
 
-                        </div>
-                        <div style={{width: "10%"}}>
-                            <input name="sum" value={sum} type="number" readOnly></input>
-                        </div>
                         {/*<div style={{width:"10%"}}><button value={ order.id }  type="submit" className={Registers.input_border}>-</button></div>*/}
                     </div>
                 )

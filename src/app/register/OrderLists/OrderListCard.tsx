@@ -29,52 +29,42 @@ function ItemBase({order, ordersHooks, index}: {
     // const sum = order.quantity * order.value
     return (
         <div className={OrderLists.item_base}>
-            <div style={{width: "20%"}}>
+            <div style={{width: "25%"}}>
                 <button name="name" value={order.menu_name} disabled>{order.menu_name}</button>
             </div>
-            <div style={{width: "5%"}}>
-            </div>
-            <div style={{width: "10%"}}>
-                    { order.coupon ?
-                        /*ホットケーキ無料*/
-                        order.coupon.cake.quantity == 0 ?
-                            <button value={index} type="button"
-                                onClick={e => ordersHooks.handleChangeOptionQuantity(e, -1)}
+            <div style={{width: "60%"}} className={OrderLists.couponList}>
+
+                {order.coupon && Object.keys(order.coupon).map((name, couponIndex) => {
+                    if (!order.coupon) return;
+                    return (
+                        order.coupon[name].quantity == 0 ?
+                            <button value={`${index}:${name}`} type="button"
+                                onClick={e => ordersHooks.handleChangeCouponQuantity(e, 1)}
+                                style={{
+                                    borderStyle: "dotted",
+                                    borderColor: "gray",
+                                }}
+                                className={`${OrderLists.couponButton}`}
+                            >{name}
+                            </button>
+                            :
+                            <button value={`${index}:${name}`} type="button"
+                                onClick={e => ordersHooks.handleChangeCouponQuantity(e, -1)}
                                 style={{
                                     borderStyle: "solid",
                                     borderColor: "gray",
                                     color: "red",
                                 }}
-                                className={`${OrderLists.optionButton}`}
+                                className={`${OrderLists.couponButton}`}
                             >{name}
                             </button>
-                            :
-                            <button value={index} type="button"
-                                onClick={e => ordersHooks.handleChangeOptionQuantity(e, 1)}
-                                style={{
-                                    borderStyle: "dotted",
-                                    borderColor: "gray",
-                                }}
-                                className={`${OrderLists.optionButton}`}
-                            >{name}
-                            </button>
-                        : <></>
-                    }
+                    )
+                    })
+                }
             </div>
+            <div style={{width: "5%"}}></div>
             <div style={{width: "10%"}}>
-            </div>
-            <div style={{width: "20%"}}>
-            </div>
-            <div style={{width: "10%"}}>
-
-            </div>
-            <div style={{width: "15%"}}>
                 <input name="sum" value={order.sum} style={{fontSize: "1.7rem"}} type="number" readOnly></input>
-            </div>
-            <div style={{width: "5%"}}>
-                <button value={index} type="button" onClick={e => ordersHooks.handleChangeBaseQuantity(e, 0)}
-                    className={Registers.input_border}>削除
-                </button>
             </div>
         </div>
     )
@@ -87,45 +77,56 @@ function ItemOption({order, ordersHooks, index}: {
 }) {
     return (
         <div className={OrderLists.option}>
-            {order.topping && Object.keys(order.topping).map((name, toppingIndex) => {
-                const topping = order.topping;
-                if (!topping) return;
-                const value = topping[name].value;
-                const quantity = topping[name].quantity;
-                // const couponAmount = topping[name].couponAmount;
-                const sum = value * quantity
+            <div style={{width: "10%", marginRight: "auto", alignItems: "center"}}>
+                <button value={index} type="button" onClick={e => ordersHooks.handleChangeBaseQuantity(e, 0)}
+                        className={Registers.input_border}
+                        style={{height: "2.5rem"}}
+                >削除
+                </button>
+            </div>
+            <div style={{width: "75%", gap: "1rem", display: "flex", justifyContent: "right"}}>
 
-                return (
-                    <div key={order.id * 100 + toppingIndex + name} className={OrderLists.toppings}>
-                        {quantity != 0 ?
-                            <button value={`${index}:${name}`} type="button"
-                                onClick={e => ordersHooks.handleChangeOptionQuantity(e, -1)}
-                                style={{
-                                    // borderStyle: "solid",
-                                    // borderWidth: "4px",
-                                    // borderColor: "orangered",
-                                    borderStyle: "solid",
-                                    borderColor: "gray",
-                                    color: "red",
-                                }}
-                                className={`${OrderLists.optionButton}`}
-                            >{name}
-                            </button>
-                            :
-                            <button value={`${index}:${name}`} type="button"
-                                onClick={e => ordersHooks.handleChangeOptionQuantity(e, 1)}
-                                style={{
-                                    borderStyle: "dotted",
-                                    borderColor: "gray",
-                                }}
-                                className={`${OrderLists.optionButton}`}
-                            >{name}
-                            </button>
-                        }
+                {order.topping && Object.keys(order.topping).map((name, toppingIndex) => {
+                    const topping = order.topping;
+                    if (!topping) return;
+                    const value = topping[name].value;
+                    const quantity = topping[name].quantity;
+                    // const couponAmount = topping[name].couponAmount;
+                    const sum = value * quantity
+
+                    return (
+                        <div key={order.id * 100 + toppingIndex + name} className={OrderLists.toppings}>
+                            {quantity != 0 ?
+                                <button value={`${index}:${name}`} type="button"
+                                    onClick={e => ordersHooks.handleChangeOptionQuantity(e, -1)}
+                                    style={{
+                                        // borderStyle: "solid",
+                                        // borderWidth: "4px",
+                                        // borderColor: "orangered",
+                                        borderStyle: "solid",
+                                        borderColor: "gray",
+                                        color: "red",
+                                    }}
+                                    className={`${OrderLists.optionButton}`}
+                                >{name}
+                                </button>
+                                :
+                                <button value={`${index}:${name}`} type="button"
+                                    onClick={e => ordersHooks.handleChangeOptionQuantity(e, 1)}
+                                    style={{
+                                        borderStyle: "dotted",
+                                        borderColor: "gray",
+                                    }}
+                                    className={`${OrderLists.optionButton}`}
+                                >{name}
+                                </button>
+                            }
 
                     </div>
                 )
             })}
+            </div>
+            <div style={{width: "15%"}}></div>
         </div>
     )
 }

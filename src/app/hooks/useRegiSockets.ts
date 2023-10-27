@@ -1,13 +1,17 @@
 import {useSocket} from "@/app/hooks/useSocket";
-import {useCallback, useMemo} from "react";
-import {OrderItemDetail} from "@/app/Types/itemTypes";
+import {useCallback, useMemo, useState} from "react";
+import {KitchenOrder, OrderItemDetail} from "@/app/Types/itemTypes";
 
 export const useRegiSockets = (apiUrl: string, clientId: number): RegiHooksType => {
     const nameSpace = useMemo(() => "register", [])
-    const {socket} = useSocket(apiUrl, nameSpace, () => {});
+    const {socket} = useSocket(apiUrl, nameSpace, (socket) => {
+        socket.on("history", (msg) => {
+            setHistory(msg);
+        })
+    });
+    const [history, setHistory] = useState<KitchenOrder[]>([]);
 
     const sendOrderData = useCallback((orderDetails: OrderItemDetail[]) => {
-        console.log("datasend!", orderDetails)
         socket.emit("temp_order_data", {clientId: clientId, data: JSON.stringify(orderDetails)})
     }, [clientId, socket]);
 
@@ -26,11 +30,13 @@ export const useRegiSockets = (apiUrl: string, clientId: number): RegiHooksType 
 
     return {
         sendOrderData,
-        submit
+        submit,
+        history,
     }
 }
 
 export type RegiHooksType = {
     sendOrderData: (orderDetails: OrderItemDetail[]) => void,
     submit: (orderDetails: OrderItemDetail[]) => void,
+    history: KitchenOrder[],
 }

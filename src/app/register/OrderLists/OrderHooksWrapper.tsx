@@ -1,7 +1,7 @@
 import {useOrders} from "@/app/hooks/useOrders";
 import OrderList from "@/app/register/OrderLists/OrderList";
 import {HandleAddOrderContext} from "@/app/register/ordersContext";
-import {MenuData, OrderItemDetail} from "@/app/Types/itemTypes";
+import {KitchenOrder, MenuData, OrderItemDetail} from "@/app/Types/itemTypes";
 import {memo, ReactNode} from "react";
 
 // currentOrdersの変更による再レンダリング対策
@@ -9,7 +9,7 @@ export const OrderHooksWrapper = memo(function ({children, menus, sendOrderData,
     children: ReactNode,
     menus: MenuData,
     sendOrderData: (orderDetails: OrderItemDetail[]) => void,
-    submit: (orderDetails: OrderItemDetail[]) => void
+    submit: (orderDetails: OrderItemDetail[]) => void,
 }) {
     const ordersHooks = useOrders(menus, sendOrderData, submit);
     const handleAddOrder = ordersHooks.handleAddOrder

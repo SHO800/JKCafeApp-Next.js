@@ -72,6 +72,23 @@
     color: black;
     text-align: left;
 }
+.couponList{
+    display: flex;
+    flex-direction: row;
+    justify-content: right !important;
+    align-items: center;
+    gap: 1rem;
+}
+
+.couponButton {
+    display: block;
+    width: 10rem;
+    height: 2rem;
+    left: 0;
+    top: 0;
+    border: white 2px solid;
+    border-radius: 5px;
+}
 
 /* 右側の注文リスト */
 .list {
@@ -80,7 +97,7 @@
 }
 .list .item_base {
     font-size: 1.1rem;
-    margin: 0.5rem 0;
+    margin: 0;
      .quantityButton {
             font-size: 2rem;
             line-height: 0;
@@ -98,12 +115,12 @@
 .list .option {
     display: flex;
     flex-direction: row;
-    gap: 3px;
+
     margin: 0.3rem 0 0;
     padding: 0.3rem 0;
-    justify-content: space-around;
+    justify-content: right;
     border-top: rgb(128, 128, 128) 1px solid;
-    /*border-bottom: rgb(128, 128, 128) 1px solid;*/
+
 
 }
 .list .option .toppings {
@@ -116,11 +133,8 @@
 }
 .optionButton {
     display: block;
-    position: absolute;
     width: 10rem;
     height: 2rem;
-    left: 0;
-    top: 0;
     border: white 2px solid;
     border-radius: 5px;
 }
