@@ -74,6 +74,35 @@ function ItemOption({order, index}: {
                     </div>
                 )
             })}
+
+            {order.coupon && Object.keys(order.coupon).map((name, couponIndex) => {
+                const coupon = order.coupon;
+                if (!coupon) return;
+                const value = coupon[name].value;
+                const quantity = coupon[name].quantity;
+                // const couponAmount = coupon[name].couponAmount;
+                const sum = value * quantity
+
+                if (quantity === 0) return;
+
+                return (
+                    <div key={order.id * 100 + couponIndex + name} className={RegisterDisplays.toppings}>
+                        <div style={{width: "5%"}}></div>
+                        <div style={{width: "80%"}}>
+                            <button name="name" value={name} disabled>+ {name}</button>
+                        </div>
+
+                        <div style={{width: "5%"}}>
+                            ¥
+                        </div>
+                        <div style={{width: "10%", display: "flex", alignItems: "center", flexDirection: "row"}}>
+                            -<input name="sum" value={sum} type="number" readOnly></input>
+                        </div>
+
+                        {/*<div style={{width:"10%"}}><button value={ order.id }  type="submit" className={Registers.input_border}>-</button></div>*/}
+                    </div>
+                )
+            })}
         </div>
     )
 }
