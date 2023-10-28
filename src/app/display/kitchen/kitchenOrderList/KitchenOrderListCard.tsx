@@ -11,7 +11,7 @@ export function KitchenOrderListCard({order, index, handleSubmit}: { order: Kitc
 
     return (
         <div className={Cards.card}>
-            <OrderOverview index={index} orderedDate={orderedDate} />
+            <OrderOverview index={order.orderId} orderedDate={orderedDate} />
             <div className={Cards.itemList}>
                 {order.items.map((item, index) => {
                     return (
@@ -19,7 +19,7 @@ export function KitchenOrderListCard({order, index, handleSubmit}: { order: Kitc
                     )
                 })}
             </div>
-            <ProvidedButton orderedAt={order.orderedAt} cardIndex={index} callback={() => handleSubmit(order.uuid)}  />
+            <ProvidedButton orderedAt={order.orderedAt} cardIndex={order.orderId} callback={() => handleSubmit(order.uuid)}  />
         </div>
     )
 }

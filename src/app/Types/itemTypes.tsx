@@ -65,6 +65,7 @@ export type ToppingData = {
 
 export type KitchenOrder = {
     uuid: string
+    orderId: number
     orderedAt: string
     items: KitchenOrderItem[]
     sum: number

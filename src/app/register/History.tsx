@@ -70,6 +70,7 @@ const HistoryCard = memo(({history, cancelOrder}: {
 
                         </div>
                         <div className={Registers.historyCardBottom}>
+                            <p>注文番号: {order.orderId.toString()}</p>
                             <details>
                                 <summary className={Registers.input_border} style={{width: "100%", display: "flex"}}>
                                     <p>詳細</p>

@@ -8,9 +8,9 @@
 
 .overview .index {
     height: 5rem;
-    width: 5rem;
+    width: 10rem;
     /*枠線*/
-    border: 1px black solid;
+    border: 1px white solid;
     display: flex;
     justify-content: center;
     align-items: center;
