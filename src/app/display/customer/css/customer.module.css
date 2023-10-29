@@ -1,0 +1,14 @@
+.contentWrapper {
+    width: 100vw;
+    height: 100vh;
+    overflow-y: scroll;
+    /*背景*/
+    /*background: black;*/
+    /*文字色*/
+    color: black;
+    /*-webkit-text-stroke-width: 0.1rem;*/
+    /*-webkit-text-stroke-color: black;*/
+    /*文字の影*/
+    /*text-shadow: 0.1rem 0.1rem 0.1rem white;*/
+}
+

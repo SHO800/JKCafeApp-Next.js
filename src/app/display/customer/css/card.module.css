@@ -1,0 +1,68 @@
+.card {
+    margin: 3rem 0;
+    border: 2px white solid;
+    width: 50%;
+    position: relative;
+}
+
+.itemList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 0;
+    gap: 2rem;
+}
+.orderCompleteButton {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+.orderCompleteButton:active {
+    background: rgba(120, 120, 120, 0.3);
+}
+.orderItem {
+    /*カードの赤かったとこ*/
+    background: rgb(100, 0, 0);
+    width: 80%;
+    padding: 0.3rem 0 0.5rem;
+}
+.base {
+    border-bottom: 1px white solid;
+}
+.base p {
+    display: inline-block;
+}
+.base .amount{
+    width: 3rem;
+    font-size: 2rem;
+    text-align: center;
+    border-right: white 1px dotted;
+}
+.base .name{
+    font-size: 1.8rem;
+    margin-left: 1rem;
+}
+
+.toppings {
+    width: 90%;
+    padding-left: 2.5rem;
+}
+.toppings .topping {
+    margin-top: 0.5rem;
+    border-bottom: 1px white solid;
+}
+.toppings p {
+    display: inline-block;
+}
+.toppings .amount{
+    width: 3rem;
+    font-size: 1.8rem;
+    text-align: center;
+    border-right: white 1px dotted;
+}
+.toppings .name{
+    font-size: 1.5rem;
+    margin-left: 1rem;
+}
